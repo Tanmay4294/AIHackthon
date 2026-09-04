@@ -1,0 +1,9 @@
+Model,Feature_Set,Num_Flagged,Pct_Flagged,ROC_AUC,PR_AUC,Invalid_Precision,Invalid_Recall,Invalid_F1,Accuracy,Balanced_Accuracy
+Isolation Forest,Set A (Raw Inputs),188,18.8,0.7246,0.3413,0.3298,0.4627,0.3851,0.802,0.6586
+Local Outlier Factor (LOF),Set A (Raw Inputs),24,2.4,0.8426,0.7116,1.0,0.1791,0.3038,0.89,0.5896
+Isolation Forest,Set B (Raw + Engineered),117,11.7,0.7094,0.2547,0.2821,0.2463,0.2629,0.815,0.5746
+Local Outlier Factor (LOF),Set B (Raw + Engineered),20,2.0,0.8399,0.668,0.95,0.1418,0.2468,0.884,0.5703
+Isolation Forest,Set C (Raw + Quality),93,9.3,0.86,0.4635,0.5699,0.3955,0.467,0.879,0.6747
+Local Outlier Factor (LOF),Set C (Raw + Quality),23,2.3,0.7824,0.6695,1.0,0.1716,0.293,0.889,0.5858
+Isolation Forest,Set D (Raw + Eng + Quality),82,8.2,0.8428,0.3818,0.4878,0.2985,0.3704,0.864,0.625
+Local Outlier Factor (LOF),Set D (Raw + Eng + Quality),24,2.4,0.8449,0.7142,1.0,0.1791,0.3038,0.89,0.5896
