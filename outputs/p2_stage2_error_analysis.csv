@@ -1,0 +1,74 @@
+Test_ID,Actual_Validity,Actual_Binary,Predicted_Validity,Predicted_Binary,Probability_Invalid,Fold,missing_any,duplicate_measurement_pair,sensor_s2_negative,sensor_zero_reading,data_quality_issue,Error_Type
+TRN-0518,Invalid,1,Valid,0,0.23,5,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0304,Invalid,1,Valid,0,0.43,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0622,Invalid,1,Valid,0,0.47,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0167,Invalid,1,Valid,0,0.35,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0704,Invalid,1,Valid,0,0.35,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0018,Invalid,1,Valid,0,0.35,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0561,Invalid,1,Valid,0,0.28,2,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0108,Invalid,1,Valid,0,0.36,2,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0557,Invalid,1,Valid,0,0.46,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0734,Invalid,1,Valid,0,0.18,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0718,Invalid,1,Valid,0,0.21,4,True,False,False,False,True,False Negative (Invalid -> Valid)
+TRN-0406,Invalid,1,Valid,0,0.45,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0652,Invalid,1,Invalid,1,0.58,5,False,False,False,True,False,Uncertain Prediction
+TRN-0202,Invalid,1,Invalid,1,0.58,4,False,False,False,False,False,Uncertain Prediction
+TRN-0025,Invalid,1,Valid,0,0.28,2,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0523,Invalid,1,Invalid,1,0.58,2,False,False,False,False,False,Uncertain Prediction
+TRN-0076,Invalid,1,Valid,0,0.29,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0929,Invalid,1,Valid,0,0.19,1,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0217,Invalid,1,Valid,0,0.16,2,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0993,Valid,0,Invalid,1,0.67,5,False,False,False,False,False,False Positive (Valid -> Invalid)
+TRN-0768,Invalid,1,Invalid,1,0.51,3,True,False,False,False,True,Uncertain Prediction
+TRN-0203,Invalid,1,Valid,0,0.46,5,False,False,True,False,False,False Negative (Invalid -> Valid)
+TRN-0935,Invalid,1,Valid,0,0.09,2,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0944,Invalid,1,Valid,0,0.32,4,True,False,False,False,True,False Negative (Invalid -> Valid)
+TRN-0646,Invalid,1,Valid,0,0.28,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0137,Invalid,1,Valid,0,0.2,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0793,Invalid,1,Valid,0,0.37,4,True,False,False,False,True,False Negative (Invalid -> Valid)
+TRN-0040,Invalid,1,Valid,0,0.32,5,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0604,Invalid,1,Invalid,1,0.52,2,False,False,False,False,False,Uncertain Prediction
+TRN-0490,Invalid,1,Valid,0,0.48,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0667,Valid,0,Valid,0,0.44,4,True,False,False,False,True,Uncertain Prediction
+TRN-0942,Invalid,1,Valid,0,0.18,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0385,Invalid,1,Invalid,1,0.6,4,False,False,False,False,False,Uncertain Prediction
+TRN-0802,Invalid,1,Invalid,1,0.52,1,True,False,False,False,True,Uncertain Prediction
+TRN-0737,Invalid,1,Valid,0,0.45,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0148,Invalid,1,Valid,0,0.14,1,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0602,Invalid,1,Valid,0,0.39,1,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0398,Invalid,1,Valid,0,0.34,1,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0857,Invalid,1,Invalid,1,0.52,3,False,False,False,False,False,Uncertain Prediction
+TRN-0009,Invalid,1,Valid,0,0.41,5,True,False,False,False,True,False Negative (Invalid -> Valid)
+TRN-0816,Invalid,1,Valid,0,0.48,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0618,Invalid,1,Valid,0,0.37,1,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0410,Invalid,1,Invalid,1,0.55,2,True,False,False,False,True,Uncertain Prediction
+TRN-0143,Invalid,1,Invalid,1,0.51,2,False,False,False,False,False,Uncertain Prediction
+TRN-0181,Invalid,1,Invalid,1,0.55,2,False,False,False,False,False,Uncertain Prediction
+TRN-0705,Valid,0,Valid,0,0.43,1,False,False,False,False,False,Uncertain Prediction
+TRN-0059,Invalid,1,Valid,0,0.33,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0292,Invalid,1,Valid,0,0.12,1,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0883,Invalid,1,Valid,0,0.21,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0837,Invalid,1,Valid,0,0.13,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0058,Valid,0,Invalid,1,0.76,5,False,False,False,False,False,False Positive (Valid -> Invalid)
+TRN-0907,Invalid,1,Valid,0,0.26,1,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0833,Valid,0,Invalid,1,0.54,1,False,False,False,False,False,False Positive (Valid -> Invalid)
+TRN-0432,Invalid,1,Valid,0,0.46,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0663,Valid,0,Invalid,1,0.62,4,False,False,False,False,False,False Positive (Valid -> Invalid)
+TRN-0233,Invalid,1,Valid,0,0.5,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0402,Invalid,1,Invalid,1,0.58,1,False,False,False,False,False,Uncertain Prediction
+TRN-0479,Invalid,1,Valid,0,0.46,2,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0640,Invalid,1,Valid,0,0.42,3,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0301,Invalid,1,Invalid,1,0.56,2,False,False,False,False,False,Uncertain Prediction
+TRN-0866,Invalid,1,Valid,0,0.46,4,False,False,False,True,False,False Negative (Invalid -> Valid)
+TRN-0808,Invalid,1,Valid,0,0.28,3,True,False,False,False,True,False Negative (Invalid -> Valid)
+TRN-0225,Invalid,1,Invalid,1,0.54,1,False,False,False,False,False,Uncertain Prediction
+TRN-0349,Invalid,1,Valid,0,0.48,5,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0401,Invalid,1,Valid,0,0.24,2,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0089,Invalid,1,Valid,0,0.45,1,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0570,Invalid,1,Valid,0,0.46,4,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0918,Invalid,1,Invalid,1,0.52,5,True,False,False,False,True,Uncertain Prediction
+TRN-0118,Invalid,1,Invalid,1,0.53,1,False,False,False,False,False,Uncertain Prediction
+TRN-0950,Invalid,1,Valid,0,0.28,5,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0642,Invalid,1,Valid,0,0.28,1,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0499,Invalid,1,Valid,0,0.33,1,False,False,False,False,False,False Negative (Invalid -> Valid)
+TRN-0535,Invalid,1,Valid,0,0.27,5,False,False,False,False,False,False Negative (Invalid -> Valid)
