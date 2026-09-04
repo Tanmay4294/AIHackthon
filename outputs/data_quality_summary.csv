@@ -1,14 +1,15 @@
-Quality_Flag,Train_Flagged_Count,Train_Prevalence (%),Train_Valid_Count,Train_Invalid_Count,Train_Valid_Pct (%),Train_Invalid_Pct (%),Test_Flagged_Count,Test_Prevalence (%)
-missing_any,44,4.4,29,15,65.91,34.09,17,4.86
-missing_critical_measurement,0,0.0,0,0,0.0,0.0,0,0.0
-non_finite_value,44,4.4,29,15,65.91,34.09,17,4.86
-duplicate_full_row,0,0.0,0,0,0.0,0.0,0,0.0
-duplicate_test_id,0,0.0,0,0,0.0,0.0,0,0.0
-duplicate_measurement_pair,24,2.4,0,24,0.0,100.0,8,2.29
-malformed_numeric,0,0.0,0,0,0.0,0.0,0,0.0
-invalid_voltage,0,0.0,0,0,0.0,0.0,0,0.0
-invalid_current,0,0.0,0,0,0.0,0.0,0,0.0
-invalid_duration,0,0.0,0,0,0.0,0.0,0,0.0
-invalid_sensor_negative,1,0.1,0,1,0.0,100.0,1,0.29
-invalid_sensor_zero,3,0.3,0,3,0.0,100.0,1,0.29
-data_quality_issue,72,7.2,29,43,40.28,59.72,25,7.14
+Quality_Flag,Category,Train_Flagged_Count,Train_Prevalence (%),Train_Valid_Count,Train_Invalid_Count,Train_Valid_Pct (%),Train_Invalid_Pct (%),Test_Flagged_Count,Test_Prevalence (%)
+missing_any,Definite Quality Failure,44,4.4,29,15,65.91,34.09,17,4.86
+missing_critical_measurement,Definite Quality Failure,0,0.0,0,0,0.0,0.0,0,0.0
+non_finite_value,Definite Quality Failure,0,0.0,0,0,0.0,0.0,0,0.0
+duplicate_full_row,Definite Quality Failure,0,0.0,0,0,0.0,0.0,0,0.0
+duplicate_test_id,Definite Quality Failure,0,0.0,0,0,0.0,0.0,0,0.0
+duplicate_measurement_pair,Diagnostic Observation,24,2.4,0,24,0.0,100.0,8,2.29
+malformed_numeric,Definite Quality Failure,0,0.0,0,0,0.0,0.0,0,0.0
+invalid_voltage,Definite Quality Failure,0,0.0,0,0,0.0,0.0,0,0.0
+invalid_current,Definite Quality Failure,0,0.0,0,0,0.0,0.0,0,0.0
+invalid_duration,Definite Quality Failure,0,0.0,0,0,0.0,0.0,0,0.0
+invalid_ambient_temp,Definite Quality Failure,0,0.0,0,0,0.0,0.0,0,0.0
+sensor_s2_negative,Diagnostic Observation,1,0.1,0,1,0.0,100.0,1,0.29
+sensor_zero_reading,Diagnostic Observation,3,0.3,0,3,0.0,100.0,1,0.29
+data_quality_issue,Definite Quality Failure,44,4.4,29,15,65.91,34.09,17,4.86

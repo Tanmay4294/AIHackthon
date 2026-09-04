@@ -1,8 +1,8 @@
 """
 CPRI Hackathon — Task 01 — Person 2
-P2-STAGE 1 — EXECUTE DATA QUALITY AUDIT PIPELINE
+P2-STAGE 1 — EXECUTE DATA QUALITY AUDIT PIPELINE (CORRECTED)
 
-Reads the official CPRI dataset (Training_Data and Test_Data), generates deterministic quality flags,
+Reads the official CPRI dataset (Training_Data and Test_Data), generates corrected deterministic quality flags,
 constructs overall summary audit statistics, builds diagnostic plots, and exports handoff artifacts.
 """
 
@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-# Ensure src directory is in sys.path
 sys.path.insert(0, os.path.dirname(__file__))
 
 from quality_features import (
@@ -21,7 +20,6 @@ from quality_features import (
     FEATURE_COLUMNS
 )
 
-# Configure clean plotting aesthetics
 plt.style.use('seaborn-v0_8-whitegrid' if 'seaborn-v0_8-whitegrid' in plt.style.available else 'default')
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.size'] = 10
@@ -44,7 +42,7 @@ def run_pipeline():
     print(f"Loaded Test_Data: {len(df_test_raw)} rows, {len(df_test_raw.columns)} columns.")
 
     # Step 1: Create Quality Flags
-    print("\n--- Generating Deterministic Quality Flags ---")
+    print("\n--- Generating Deterministic Quality Flags (Corrected Definitions) ---")
     df_train_flagged = create_quality_flags(df_train_raw, feature_cols=FEATURE_COLUMNS)
     df_test_flagged = create_quality_flags(df_test_raw, feature_cols=FEATURE_COLUMNS)
 
@@ -74,7 +72,7 @@ def run_pipeline():
     print(f"Saved Test Audit: {test_out_path}")
     print(f"Saved Audit Summary: {summary_out_path}")
 
-    # Step 4: Generate Useful Diagnostic Visualizations
+    # Step 4: Generate Diagnostic Visualizations
     figures_dir = os.path.join(outputs_dir, 'figures')
     os.makedirs(figures_dir, exist_ok=True)
     
@@ -86,7 +84,7 @@ def run_pipeline():
     # Step 5: Generate Person 1 Handoff Report
     generate_person1_handoff_md(df_summary, df_train_flagged, df_test_flagged, os.path.join(outputs_dir, 'person2_stage1_handoff.md'))
 
-    print("\nData Quality Audit Pipeline completed successfully.")
+    print("\nCorrected Data Quality Audit Pipeline completed successfully.")
 
 
 def plot_missing_values(df_train: pd.DataFrame, df_test: pd.DataFrame, output_path: str):
@@ -102,6 +100,7 @@ def plot_missing_values(df_train: pd.DataFrame, df_test: pd.DataFrame, output_pa
     df_plot.plot(kind='bar', ax=ax, color=['#1f77b4', '#ff7f0e'], width=0.7)
     ax.set_title('Missing Values Count by Column (CPRI Dataset)', fontsize=13, fontweight='bold', pad=15)
     ax.set_ylabel('Missing Count (NaN)', fontweight='bold')
+    ax.set_xticks(range(len(cols)))
     ax.set_xticklabels(cols, rotation=30, ha='right')
     ax.grid(axis='y', linestyle='--', alpha=0.7)
     
@@ -118,7 +117,7 @@ def plot_missing_values(df_train: pd.DataFrame, df_test: pd.DataFrame, output_pa
 
 
 def plot_flag_affected_records(df_summary: pd.DataFrame, output_path: str):
-    """Visualization 2: Records affected by each quality flag."""
+    """Visualization 2: Records affected by each quality & diagnostic flag."""
     df_plot = df_summary.copy()
     
     fig, ax = plt.subplots(figsize=(11, 5.5))
@@ -128,7 +127,7 @@ def plot_flag_affected_records(df_summary: pd.DataFrame, output_path: str):
     rects1 = ax.bar([i - width/2 for i in x], df_plot['Train_Flagged_Count'], width, label='Training_Data (N=1000)', color='#2b5c8f')
     rects2 = ax.bar([i + width/2 for i in x], df_plot['Test_Flagged_Count'], width, label='Test_Data (N=350)', color='#e6550d')
     
-    ax.set_title('Records Affected by Each Data Quality Flag', fontsize=13, fontweight='bold', pad=15)
+    ax.set_title('Records Affected by Quality & Diagnostic Flags', fontsize=13, fontweight='bold', pad=15)
     ax.set_ylabel('Flagged Record Count', fontweight='bold')
     ax.set_xticks(list(x))
     ax.set_xticklabels(df_plot['Quality_Flag'], rotation=35, ha='right')
@@ -173,15 +172,15 @@ def plot_validity_label_distribution(df_train: pd.DataFrame, output_path: str):
 
 
 def plot_validity_among_flagged(df_train_flagged: pd.DataFrame, output_path: str):
-    """Visualization 4: Valid vs Invalid distribution among quality-flagged records."""
+    """Visualization 4: Valid vs Invalid distribution among definite quality-flagged records."""
     df_flagged = df_train_flagged[df_train_flagged['data_quality_issue']]
     counts = df_flagged['Validity_Label'].value_counts()
     
     fig, ax = plt.subplots(figsize=(7, 4.5))
-    colors = ['#d62728', '#2ca02c']
+    colors = ['#2ca02c', '#d62728']
     bars = ax.bar(counts.index, counts.values, color=colors, width=0.45)
     
-    ax.set_title('Validity_Label Distribution Among Quality-Flagged Records (N=72)', fontsize=12, fontweight='bold', pad=15)
+    ax.set_title('Validity_Label Distribution Among Definite Quality-Flagged Records (N=44)', fontsize=12, fontweight='bold', pad=15)
     ax.set_ylabel('Record Count', fontweight='bold')
     ax.grid(axis='y', linestyle='--', alpha=0.7)
 
@@ -205,45 +204,46 @@ def generate_person1_handoff_md(df_summary: pd.DataFrame, df_train: pd.DataFrame
 **From**: Person 2 (Data Quality & Classification Lead)  
 **To**: Person 1 (Equipment Behaviour & Regime Analysis Lead)  
 **Project**: CPRI State-Level Hackathon — Task 01  
-**Scope**: P2-Stage 1 Data Quality Audit Deliverables  
+**Scope**: P2-Stage 1 Data Quality Audit Deliverables (Corrected Definitions)  
 
 ---
 
 ## 1. Executive Handoff Overview
 
-Stage 1 has established a deterministic, reproducible, **zero-deletion** data quality audit for the CPRI Hackathon dataset (`CPRI_Hackathon_Screening_Dataset_PARTICIPANT.xlsx`).
+Stage 1 has established a deterministic, reproducible, **zero-deletion** data quality audit for the official CPRI Hackathon dataset (`CPRI_Hackathon_Screening_Dataset_PARTICIPANT.xlsx`).
 
 ### Dataset Metrics:
 - **Training_Data**: Exactly **1,000 records** (866 Valid, 134 Invalid)
 - **Test_Data**: Exactly **350 records**
-- **Quality Issue Prevalence**:
-  - `Training_Data`: **72 records (7.20%)** exhibit data quality issues.
-  - `Test_Data`: **25 records (7.14%)** exhibit data quality issues.
+- **Definite Data-Quality Failures (`data_quality_issue`)**:
+  - `Training_Data`: **44 records (4.40%)** (all due to missing values `missing_any`).
+  - `Test_Data`: **17 records (4.86%)** (all due to missing values `missing_any`).
+- **Observational / Diagnostic Flags**:
+  - `duplicate_measurement_pair`: 24 records (2.40%) in Training, 8 records (2.29%) in Test.
+  - `sensor_s2_negative`: 1 record (0.10%) in Training, 1 record (0.29%) in Test.
+  - `sensor_zero_reading`: 3 records (0.30%) in Training, 1 record (0.29%) in Test.
 
 ---
 
-## 2. Quality Flag Specifications
+## 2. Strict Flag Categorization
 
-Every record in `outputs/data_quality_audit_training.csv` and `outputs/data_quality_audit_test.csv` has been enriched with the following deterministic row-level flags:
-
-| Flag Name | Description | Training Count (%) | Test Count (%) |
-| :--- | :--- | :---: | :---: |
-| `missing_any` | `True` if any sensor column (`Sensor_S1`..`S4`) is NaN. | 44 (4.40%) | 17 (4.86%) |
-| `missing_columns` | String listing exact missing sensor names (e.g. `Sensor_S4`). | N/A | N/A |
-| `missing_critical_measurement` | `True` if Voltage, Current, Ambient Temp, or Duration is missing. | 0 (0.00%) | 0 (0.00%) |
-| `non_finite_value` | `True` if `NaN`, `+Inf`, or `-Inf` exists in numeric streams. | 44 (4.40%) | 17 (4.86%) |
-| `duplicate_full_row` | `True` if 100% exact duplicate row across all columns. | 0 (0.00%) | 0 (0.00%) |
-| `duplicate_test_id` | `True` if duplicate `Test_ID` string occurs. | 0 (0.00%) | 0 (0.00%) |
-| `duplicate_measurement_pair` | `True` if identical measurement feature vector exists in another Test_ID. | 24 (2.40%) | 8 (2.29%) |
-| `malformed_numeric` | `True` if non-numeric or unparseable string is present. | 0 (0.00%) | 0 (0.00%) |
-| `invalid_voltage` | `True` if `Applied_Voltage_kV < 0`. | 0 (0.00%) | 0 (0.00%) |
-| `invalid_current` | `True` if `Load_Current_A < 0`. | 0 (0.00%) | 0 (0.00%) |
-| `invalid_duration` | `True` if `Test_Duration_min <= 0`. | 0 (0.00%) | 0 (0.00%) |
-| `invalid_ambient_temp` | `True` if `Ambient_Temperature_C < -273.15`. | 0 (0.00%) | 0 (0.00%) |
-| `invalid_sensor_negative` | `True` if `Sensor_S2 < 0` (negative sensor drop). | 1 (0.10%) | 1 (0.29%) |
-| `invalid_sensor_zero` | `True` if `Sensor_S1`, `S2`, or `S3` hits exact 0.0000. | 3 (0.30%) | 1 (0.29%) |
-| `data_quality_issue_count` | Sum of active quality flags per record ($0 \dots 5$). | N/A | N/A |
-| `data_quality_issue` | `True` if ANY quality flag is triggered (`count > 0`). | 72 (7.20%) | 25 (7.14%) |
+| Flag Name | Category | Description | Training Count (%) | Test Count (%) |
+| :--- | :---: | :--- | :---: | :---: |
+| `missing_any` | Definite Quality Failure | `True` if any sensor column (`Sensor_S1`..`S4`) is NaN. | 44 (4.40%) | 17 (4.86%) |
+| `missing_columns` | Audit Detail | String listing exact missing sensor names (e.g. `Sensor_S4`). | N/A | N/A |
+| `missing_critical_measurement` | Definite Quality Failure | `True` if Voltage, Current, Ambient Temp, or Duration is missing. | 0 (0.00%) | 0 (0.00%) |
+| `non_finite_value` | Definite Quality Failure | `True` ONLY if numeric value is `+Inf` or `-Inf` (`np.isinf()`). (NaNs excluded). | 0 (0.00%) | 0 (0.00%) |
+| `duplicate_full_row` | Definite Quality Failure | `True` if 100% exact duplicate row across all columns including Test_ID. | 0 (0.00%) | 0 (0.00%) |
+| `duplicate_test_id` | Definite Quality Failure | `True` if duplicate `Test_ID` string occurs. | 0 (0.00%) | 0 (0.00%) |
+| `malformed_numeric` | Definite Quality Failure | `True` if non-numeric or unparseable string is present. | 0 (0.00%) | 0 (0.00%) |
+| `invalid_voltage` | Definite Quality Failure | `True` if `Applied_Voltage_kV < 0` (Hard physical voltage law). | 0 (0.00%) | 0 (0.00%) |
+| `invalid_current` | Definite Quality Failure | `True` if `Load_Current_A < 0` (Hard physical current law). | 0 (0.00%) | 0 (0.00%) |
+| `invalid_duration` | Definite Quality Failure | `True` if `Test_Duration_min <= 0` (Hard physical duration law). | 0 (0.00%) | 0 (0.00%) |
+| `invalid_ambient_temp` | Definite Quality Failure | `True` if `Ambient_Temperature_C < -273.15` (Below absolute zero). | 0 (0.00%) | 0 (0.00%) |
+| `duplicate_measurement_pair` | Diagnostic Observation | `True` if identical measurement feature vector exists in another Test_ID. | 24 (2.40%) | 8 (2.29%) |
+| `sensor_s2_negative` | Diagnostic Observation | `True` if `Sensor_S2 < 0` (Observed negative sensor reading). | 1 (0.10%) | 1 (0.29%) |
+| `sensor_zero_reading` | Diagnostic Observation | `True` if `Sensor_S1`, `S2`, or `S3` hits exact 0.0000. | 3 (0.30%) | 1 (0.29%) |
+| `data_quality_issue` | Combined Failure Flag | `True` if ANY definite quality failure is triggered. | 44 (4.40%) | 17 (4.86%) |
 
 ---
 
@@ -253,14 +253,14 @@ In `Training_Data` (1,000 records, 866 Valid, 134 Invalid):
 
 1. **`duplicate_measurement_pair` (24 records / 12 pairs)**:
    - **100.0% Invalid (24 Invalid, 0 Valid)**.
-   - Engineers consistently invalidated tests that generated exact duplicate measurement pairs.
-2. **`invalid_sensor_negative` (1 record)**:
+   - *Observation*: While tracked as a diagnostic observation rather than a hard corruption law, engineers consistently invalidated tests that generated exact duplicate measurement pairs.
+2. **`sensor_s2_negative` (1 record)**:
    - **100.0% Invalid (1 Invalid, 0 Valid)** (`TRN-0346`).
-3. **`invalid_sensor_zero` (3 records)**:
+3. **`sensor_zero_reading` (3 records)**:
    - **100.0% Invalid (3 Invalid, 0 Valid)** (`TRN-0346`, `TRN-0357`, `TRN-0512`).
 4. **`missing_any` (44 records)**:
    - **29 Valid (65.9%) vs 15 Invalid (34.1%)**.
-   - **Crucial Finding**: Engineers did NOT automatically invalidate a test simply because a single non-critical sensor (like `Sensor_S4`) was missing if electrical measurements and overall behavior were consistent.
+   - *Crucial Finding*: Engineers did NOT automatically invalidate a test simply because a single non-critical sensor (like `Sensor_S4`) was missing if electrical measurements and overall behavior were consistent.
 
 ---
 
@@ -268,10 +268,10 @@ In `Training_Data` (1,000 records, 866 Valid, 134 Invalid):
 
 > [!IMPORTANT]
 > **Category 1 — Definite Data Quality Problems**:
-> `duplicate_measurement_pair`, `invalid_sensor_negative`, `invalid_sensor_zero`, and `missing_any` represent recording / DAQ hardware quality defects.
+> `missing_any`, `non_finite_value`, `duplicate_full_row`, `duplicate_test_id`, `malformed_numeric`, and hard physical laws represent true data quality corruptions.
 >
 > **Category 2 & 3 — Operating Regimes & Genuine Equipment Behaviour**:
-> High currents (up to 109.95 A) or high ambient temperatures (up to 55.0°C) are **GENUINE OPERATING REGIMES** (as stated in CPRI dataset README: *"Genuine operating-regime change is embedded in valid data"*).
+> High load currents (up to 109.95 A) or high ambient temperatures (up to 55.0°C) are **GENUINE OPERATING REGIMES** (as stated in CPRI dataset README: *"Genuine operating-regime change is embedded in valid data"*).
 >
 > Do **NOT** use naive z-score or IQR thresholds (e.g. declaring current > 100A invalid) during your regime modeling. Genuine high-load testing is expected and valid!
 
@@ -282,7 +282,7 @@ In `Training_Data` (1,000 records, 866 Valid, 134 Invalid):
 1. **For Equipment Regime Clustering**:
    - Filter on `missing_any == False` or impute missing sensor values using physical sensor correlations (`Sensor_S1` vs `Sensor_S2`).
 2. **For Task 01 Valid/Invalid Modeling**:
-   - Use `duplicate_measurement_pair`, `invalid_sensor_negative`, and `invalid_sensor_zero` as strong deterministic indicators of invalidity.
+   - Include diagnostic flags `duplicate_measurement_pair`, `sensor_s2_negative`, and `sensor_zero_reading` as valuable features for downstream classifier training.
 3. **For Task 02 Reference Parameter Prediction**:
    - Filter out `data_quality_issue == True` when training regression models to avoid fitting noise from missing `Sensor_S4` values.
 """

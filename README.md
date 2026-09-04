@@ -11,13 +11,13 @@ This section of the repository is owned by **Person 2** (Data Quality, Anomaly D
 Current active focus: **P2-Stage 1 — Data Quality Audit** (Stage 2 modeling has not been started).
 
 ## Checks Implemented in P2-Stage 1
-1. **Missing Values**: Identifies rows containing `NaN`/`Null` entries across sensor columns (`Sensor_S1`..`S4`) (`missing_any`, `missing_columns`).
-2. **Non-Finite Values**: Detects non-finite numerical representations (`non_finite_value`).
-3. **Duplicate Complete Rows**: Detects exact 100% duplicate records across all columns (`duplicate_full_row`).
-4. **Duplicate Test_IDs**: Audits whether `Test_ID` strings repeat (`duplicate_test_id`).
-5. **Duplicate Measurement Pairs**: Detects records sharing identical feature vectors across different `Test_ID`s (`duplicate_measurement_pair`).
-6. **Malformed Numeric Values**: Checks for strings or unparseable numeric values (`malformed_numeric`).
-7. **Justified Physical Constraints**: Checks for genuine physical violations such as `Applied_Voltage_kV < 0`, `Load_Current_A < 0`, `Test_Duration_min <= 0`, `Sensor_S2 < 0`, and exact zero sensor drops (`invalid_sensor_zero`).
+1. **Missing Values (`missing_any`)**: Identifies rows containing `NaN`/`Null` entries across measurement columns (`Sensor_S1`..`S4`).
+2. **Non-Finite Values (`non_finite_value`)**: Detects ONLY actual `+Infinity` or `-Infinity` values (`np.isinf()`). NaNs are excluded and reported under missing values.
+3. **Duplicate Complete Rows (`duplicate_full_row`)**: Detects exact 100% duplicate records across all columns including `Test_ID`.
+4. **Duplicate Test_IDs (`duplicate_test_id`)**: Audits whether `Test_ID` strings repeat.
+5. **Duplicate Measurement Pairs (`duplicate_measurement_pair`)**: Diagnostic observation flag detecting records sharing identical measurement feature vectors across different `Test_ID`s. Maintained for downstream analysis; NOT treated as automatic data corruption.
+6. **Malformed Numeric Values (`malformed_numeric`)**: Checks for unparseable numeric strings or values.
+7. **Justified Physical Constraints**: Enforces ONLY genuinely justified physical laws (e.g. `Applied_Voltage_kV < 0`, `Load_Current_A < 0`, `Test_Duration_min <= 0`, `Ambient_Temperature_C < -273.15`). Observed dataset ranges (e.g. 8 to 32 kV) are reported as statistics and NOT enforced as arbitrary physical invalidity laws.
 
 ## Important Principle
 **Unusual values are NOT automatically considered invalid.**  

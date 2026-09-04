@@ -1,6 +1,6 @@
 """
-Automated Validation Suite — P2-Stage 1 Data Quality Audit
-Tests quality_features.py on official CPRI dataset and dummy data.
+Automated Validation Suite — P2-Stage 1 Data Quality Audit (Corrected)
+Tests quality_features.py on official CPRI dataset and verifies all corrected audit rules.
 """
 
 import os
@@ -9,7 +9,6 @@ import numpy as np
 import pandas as pd
 import pytest
 
-# Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from quality_features import (
@@ -48,8 +47,8 @@ def test_row_counts_and_preservation(cpri_data):
     df_test_flagged = create_quality_flags(df_test)
     
     # Check 1: Row counts unchanged
-    assert len(df_train_flagged) == trn_len_orig
-    assert len(df_test_flagged) == tst_len_orig
+    assert len(df_train_flagged) == trn_len_orig == 1000
+    assert len(df_test_flagged) == tst_len_orig == 350
     
     # Check 2: Original columns preserved without alteration
     for col in df_train.columns:
@@ -60,7 +59,7 @@ def test_row_counts_and_preservation(cpri_data):
 
 
 def test_determinism_and_reproducibility(cpri_data):
-    df_train, df_test = cpri_data
+    df_train, _ = cpri_data
     
     run1 = create_quality_flags(df_train)
     run2 = create_quality_flags(df_train)
@@ -69,11 +68,26 @@ def test_determinism_and_reproducibility(cpri_data):
     pd.testing.assert_frame_equal(run1, run2)
 
 
+def test_non_finite_infinity_isolation():
+    """Verify non_finite_value detects +Inf/-Inf ONLY and ignores NaN."""
+    dummy_df = pd.DataFrame({
+        "Applied_Voltage_kV": [10.0, np.nan, np.inf, -np.inf, 20.0],
+        "Load_Current_A": [50.0, 60.0, 70.0, 80.0, 90.0]
+    })
+    non_fin = audit_non_finite_values(dummy_df, feature_cols=["Applied_Voltage_kV", "Load_Current_A"])
+    
+    # Row 0: False (10.0)
+    # Row 1: False (NaN - missing_any, NOT non_finite)
+    # Row 2: True (+Inf)
+    # Row 3: True (-Inf)
+    # Row 4: False (20.0)
+    assert list(non_fin) == [False, False, True, True, False]
+
+
 def test_test_data_independence_from_validity_label(cpri_data):
     _, df_test = cpri_data
     assert "Validity_Label" not in df_test.columns
     
-    # Must run without error on Test_Data
     df_test_flagged = create_quality_flags(df_test)
     assert "data_quality_issue" in df_test_flagged.columns
     assert len(df_test_flagged) == 350
@@ -85,18 +99,38 @@ def test_cpri_specific_data_quality_counts(cpri_data):
     df_trn_f = create_quality_flags(df_train)
     df_tst_f = create_quality_flags(df_test)
     
-    # Verify exact empirical counts obtained from CPRI dataset
+    # Missing values
     assert df_trn_f['missing_any'].sum() == 44
     assert df_tst_f['missing_any'].sum() == 17
     
+    # Actual +Inf/-Inf ONLY (0 in CPRI dataset)
+    assert df_trn_f['non_finite_value'].sum() == 0
+    assert df_tst_f['non_finite_value'].sum() == 0
+
+    # Duplicate full rows (0 in CPRI dataset)
+    assert df_trn_f['duplicate_full_row'].sum() == 0
+    assert df_tst_f['duplicate_full_row'].sum() == 0
+
+    # Duplicate Test_IDs (0 in CPRI dataset)
+    assert df_trn_f['duplicate_test_id'].sum() == 0
+    assert df_tst_f['duplicate_test_id'].sum() == 0
+
+    # Hard Physical Laws (0 violations in CPRI dataset)
+    assert df_trn_f['invalid_voltage'].sum() == 0
+    assert df_trn_f['invalid_current'].sum() == 0
+    assert df_trn_f['invalid_duration'].sum() == 0
+    assert df_trn_f['invalid_ambient_temp'].sum() == 0
+    
+    # Diagnostic Observations
     assert df_trn_f['duplicate_measurement_pair'].sum() == 24
     assert df_tst_f['duplicate_measurement_pair'].sum() == 8
     
-    assert df_trn_f['invalid_sensor_negative'].sum() == 1
-    assert df_tst_f['invalid_sensor_negative'].sum() == 1
+    assert df_trn_f['sensor_s2_negative'].sum() == 1
+    assert df_tst_f['sensor_s2_negative'].sum() == 1
     
-    assert df_trn_f['invalid_sensor_zero'].sum() == 3
-    assert df_tst_f['invalid_sensor_zero'].sum() == 1
+    assert df_trn_f['sensor_zero_reading'].sum() == 3
+    assert df_tst_f['sensor_zero_reading'].sum() == 1
 
-    assert df_trn_f['data_quality_issue'].sum() == 72
-    assert df_tst_f['data_quality_issue'].sum() == 25
+    # Combined Definite Data Quality Failure (44 in Training, 17 in Test)
+    assert df_trn_f['data_quality_issue'].sum() == 44
+    assert df_tst_f['data_quality_issue'].sum() == 17
