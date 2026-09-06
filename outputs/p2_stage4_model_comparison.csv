@@ -1,0 +1,13 @@
+Model,Feature_Set,Invalid_Precision,Invalid_Recall,Invalid_F1,Invalid_F1_Std,Macro_F1,Accuracy,Balanced_Accuracy,ROC_AUC,PR_AUC,CV_Folds
+Logistic Regression (Balanced),Set A (Stage 2 Best: Raw + Quality),0.4,0.5075,0.4474,0.0614,0.6742,0.832,0.6948,0.6523,0.4575,5
+Random Forest (Balanced),Set A (Stage 2 Best: Raw + Quality),0.9535,0.6119,0.7455,0.0819,0.857,0.944,0.8037,0.9791,0.9134,5
+Random Forest + Fold Anomaly Score,Set A (Stage 2 Best: Raw + Quality),0.9451,0.6418,0.7644,0.077,0.8673,0.947,0.818,0.9565,0.8691,5
+Gradient Boosting,Set A (Stage 2 Best: Raw + Quality),0.9494,0.5597,0.7042,0.0609,0.8345,0.937,0.7775,0.9669,0.8821,5
+Logistic Regression (Balanced),Set B (Raw + Person 2 Contextual),0.8611,0.694,0.7686,0.0555,0.8684,0.944,0.8384,0.8633,0.741,5
+Random Forest (Balanced),Set B (Raw + Person 2 Contextual),0.9397,0.8134,0.872,0.0296,0.9269,0.968,0.9027,0.9817,0.9423,5
+Random Forest + Fold Anomaly Score,Set B (Raw + Person 2 Contextual),0.955,0.791,0.8653,0.035,0.9233,0.967,0.8926,0.9777,0.9359,5
+Gradient Boosting,Set B (Raw + Person 2 Contextual),0.9811,0.7761,0.8667,0.0256,0.9242,0.968,0.8869,0.9741,0.9327,5
+Logistic Regression (Balanced),Set C (Combined: Raw + Quality + Contextual),0.9106,0.8358,0.8716,0.0604,0.9263,0.967,0.9116,0.9601,0.8854,5
+Random Forest (Balanced),Set C (Combined: Raw + Quality + Contextual),0.9913,0.8507,0.9157,0.0384,0.9518,0.979,0.9248,0.9888,0.9664,5
+Random Forest + Fold Anomaly Score,Set C (Combined: Raw + Quality + Contextual),0.9823,0.8284,0.8988,0.0427,0.9423,0.975,0.913,0.9781,0.9426,5
+Gradient Boosting,Set C (Combined: Raw + Quality + Contextual),0.9815,0.791,0.876,0.0341,0.9295,0.97,0.8944,0.9831,0.9453,5

@@ -1,0 +1,5 @@
+Test_ID,Actual_Validity,Actual_Binary,Predicted_Validity,Predicted_Binary,Probability_Invalid,Final_Threshold,Fold,Model,Feature_Set,Applied_Voltage_kV,Load_Current_A,Ambient_Temperature_C,missing_any,duplicate_measurement_pair,data_quality_issue
+TRN-0993,Valid,0,Invalid,1,0.48,0.35,5,Random Forest (Balanced),Set C (Combined: Raw + Quality + Contextual),30.921,107.667,40.2538,False,False,False
+TRN-0705,Valid,0,Invalid,1,0.445,0.35,1,Random Forest (Balanced),Set C (Combined: Raw + Quality + Contextual),8.2692,25.6949,31.0763,False,False,False
+TRN-0058,Valid,0,Invalid,1,0.615,0.35,5,Random Forest (Balanced),Set C (Combined: Raw + Quality + Contextual),31.3506,109.6014,35.8066,False,False,False
+TRN-0663,Valid,0,Invalid,1,0.435,0.35,4,Random Forest (Balanced),Set C (Combined: Raw + Quality + Contextual),31.9783,109.3958,31.4348,False,False,False
