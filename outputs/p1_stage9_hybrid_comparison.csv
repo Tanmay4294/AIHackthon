@@ -1,0 +1,7 @@
+Approach,Invalid_Precision,Invalid_Recall,Invalid_F1,Balanced_Accuracy,Accuracy,ROC_AUC,PR_AUC,TP,TN,FP,FN,Quality_Evidence,Consistency_Evidence,Anomaly_Evidence
+Supervised_only,0.971,1.0,0.9853,0.9977,0.996,0.9999,0.9991,134,862,4,0,False,False,False
+Supervised_plus_quality,0.971,1.0,0.9853,0.9977,0.996,0.9999,0.9991,134,862,4,0,True,False,False
+Supervised_plus_consistency,0.1828,1.0,0.3091,0.6542,0.401,0.9999,0.9991,134,267,599,0,True,True,False
+Supervised_plus_anomaly,0.8221,1.0,0.9024,0.9833,0.971,0.9999,0.9991,134,837,29,0,True,False,True
+Supervised_plus_quality_consistency,0.1828,1.0,0.3091,0.6542,0.401,0.9999,0.9991,134,267,599,0,True,True,False
+Full_hybrid,0.1806,1.0,0.3059,0.649,0.392,0.9999,0.9991,134,258,608,0,True,True,True

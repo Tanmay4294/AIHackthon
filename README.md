@@ -19,6 +19,8 @@ This section is owned by **Person 1** (Contextual, Regime & Feature Engineering 
 - **Stage 6 (Build Baseline Detectors)**: Comprehensive evaluation framework (`src/stage6_baselines.py`) implementing 6 baseline detectors: Deterministic Quality Rules, Robust Statistical IQR Outliers, Z-Score Outliers, Isolation Forest, LOF, and Residual/Consistency Thresholds. Includes Precision/Recall/F1/ROC-AUC evaluation, False Positive & False Negative analysis, and operating regime performance breakdown across Heavy HV Load, Heavy Current, High Voltage, and Standard regimes. Generates 6 CSV reports, 6 figures in `outputs/figures/`, report `outputs/p1_stage6_baseline_report.md`, handoff report `outputs/p1_stage6_handoff.md`, pipeline script (`src/run_stage6_baselines.py`), notebook (`notebooks/person1_stage6_baseline_detectors.ipynb`), and 15 unit tests.
 - **Stage 7 (Build ML Classification / Anomaly Models)**: Strict fold-isolated 5-fold Stratified Cross-Validation evaluation (`src/stage7_ml_models.py`) across 15 candidate configurations (3 model architectures: Logistic Regression, Random Forest, HistGradientBoosting x 5 feature sets: Sets A..E). Includes target leakage audit (`outputs/p1_stage7_leakage_audit.md`), decision threshold optimization (0.10–0.90), permutation feature importance, false-positive/negative error analysis, final inference on `Test_Data` (350 rows), pipeline script (`src/run_stage7_ml_models.py`), interactive notebook (`notebooks/person1_stage7_ml_classification.ipynb`), report `outputs/p1_stage7_report.md`, handoff report `outputs/p1_stage7_handoff.md`, and 24 unit tests.
 - **Stage 8 (Validation & Threshold Selection)**: Leakage-free validation of the winning Stage 7 configuration (`Random_Forest__Set_D_Full_Stage5`) using strictly out-of-fold probabilities from `StratifiedKFold(n_splits=5, shuffle=True, random_state=42)`. Adds threshold analysis, fold stability, final confusion matrix, systematic FP/FN inspection, validation report, notebook, reusable module (`src/stage8_validation.py`), and 16 unit tests. Generates `outputs/p1_stage8_gap_analysis.md`, `outputs/p1_stage8_threshold_analysis.csv`, `outputs/p1_stage8_threshold_selection.md`, `outputs/p1_stage8_fold_metrics.csv`, `outputs/p1_stage8_oof_predictions.csv`, `outputs/p1_stage8_false_positive_analysis.csv`, `outputs/p1_stage8_false_negative_analysis.csv`, `outputs/p1_stage8_misclassification_report.md`, `outputs/p1_stage8_validation_report.md`, and 3 figures in `outputs/figures/`.
+- **Stage 9 (Final Hybrid Detector)**: Historical OOF comparison of supervised-only, quality, physical consistency, anomaly, combined, and full-hybrid approaches. The validated Random Forest plus full Stage 5 feature set remains selected because soft hybrid evidence adds false positives without improving recall. Hard corruption flags are an inference-safe safety precedence; unusual operating regimes are not rejected solely for being extreme. Implemented in `src/final_hybrid_detector.py` with reports `outputs/p1_stage9_gap_analysis.md`, `outputs/p1_stage9_hybrid_comparison.csv`, and `outputs/p1_stage9_precedence_rules.md`.
+- **Stage 10 (Final Test Predictions)**: `src/run_final_detector.py` loads the raw workbook, fits only on `Training_Data`, applies the locked `0.40` threshold, validates exactly 350 predictions, and writes the official two-column submission to `outputs/task1_predictions.csv`. Diagnostics and unlabeled distribution checks are saved separately. Run with `python src/run_final_detector.py`.
 
 
 ---
@@ -74,19 +76,22 @@ python src/run_stage7_ml_models.py
 # 9. Execute Person 1 Stage 8 Validation & Threshold Selection pipeline
 python src/run_stage8_validation.py
 
-# 10. Execute Person 2 Stage 1 Audit pipeline
+# 10. Execute Person 1 Stage 9/10 final detector and Test_Data submission
+python src/run_final_detector.py
+
+# 11. Execute Person 2 Stage 1 Audit pipeline
 python src/run_audit_pipeline.py
 
-# 11. Execute Person 2 Stage 2 Baseline Supervised Classification pipeline
+# 12. Execute Person 2 Stage 2 Baseline Supervised Classification pipeline
 python src/run_stage2_baseline.py
 
-# 12. Execute Person 2 Stage 3 Unsupervised Anomaly Detection pipeline
+# 13. Execute Person 2 Stage 3 Unsupervised Anomaly Detection pipeline
 python src/run_stage3_anomaly.py
 
-# 13. Execute Person 2 Stage 4 Final Validity Classifier pipeline
+# 14. Execute Person 2 Stage 4 Final Validity Classifier pipeline
 python src/run_stage4_final.py
 
-# 14. Run complete automated pytest suite across all test modules
+# 15. Run complete automated pytest suite across all test modules
 python -m pytest tests/ -v
 ```
 
@@ -129,6 +134,10 @@ python -m pytest tests/ -v
 - `outputs/p1_stage8_false_positive_analysis.csv` & `p1_stage8_false_negative_analysis.csv` (Person 1 Stage 8)
 - `outputs/p1_stage8_misclassification_report.md` & `p1_stage8_validation_report.md` (Person 1 Stage 8)
 - `notebooks/person1_stage8_validation_threshold_selection.ipynb` (Person 1 Stage 8)
+- `outputs/p1_stage9_gap_analysis.md`, `outputs/p1_stage9_hybrid_comparison.csv`, and `outputs/p1_stage9_precedence_rules.md` (Person 1 Stage 9)
+- `outputs/task1_predictions.csv` (official Person 1 Stage 10 submission; exactly `Test_ID`, `Validity_Label`)
+- `outputs/p1_stage10_test_predictions_diagnostics.csv`, `outputs/p1_stage10_test_prediction_report.md`, and `outputs/p1_stage10_distribution_check.md` (Person 1 Stage 10 diagnostics)
+- `notebooks/person1_stage9_10_final_detector.ipynb` (Person 1 Stage 9/10)
 - `outputs/data_quality_audit_training.csv` & `data_quality_audit_test.csv` (Person 2 Stage 1)
 - `outputs/p2_stage2_baseline_comparison.csv` & `p2_stage2_oof_predictions.csv` (Person 2 Stage 2)
 - `outputs/p2_stage3_anomaly_scores_training.csv` & `p2_stage3_anomaly_scores_test.csv` (Person 2 Stage 3)
