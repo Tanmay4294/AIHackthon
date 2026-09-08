@@ -6,14 +6,24 @@ The Central Power Research Institute (CPRI) performs repeated electrical testing
 ## Task 01
 The objective of **Task 01** is to identify abnormal/unreliable electrical tests and classify each test record as **Valid** or **Invalid**.
 
-## Person 2
+---
+
+## Person 1 Stages & Progress
+This section is owned by **Person 1** (Contextual, Regime & Feature Engineering Lead).
+
+- **Stage 1 (Dataset & Environment Setup)**: Modular dataset loader (`src/dataset_loader.py`), programmatic Excel sheet inspection, schema separation (isolating physical features from targets and IDs), relative path resolution, setup notebook (`notebooks/person1_stage1_dataset_setup.ipynb`), and 18 automated unit tests.
+
+---
+
 ## Person 2 Stages & Progress
-This repository section is owned by **Person 2** (Data Quality, Anomaly Detection & Classification Lead).
+This section is owned by **Person 2** (Data Quality, Anomaly Detection & Classification Lead).
 
 - **Stage 1 (Data Quality Audit)**: Deterministic, zero-deletion quality auditing (`missing_any`, duplicate checks, physical constraints).
 - **Stage 2 (Supervised Classification Baselines)**: 5-fold Stratified CV evaluation across 8 baseline configurations.
 - **Stage 3 (Unsupervised Anomaly Detection)**: Independent Isolation Forest & LOF anomaly scoring, score direction standardization (higher = more anomalous), and 4-group agreement analysis.
 - **Stage 4 (Final Validity Model)**: Final reproducible Valid vs Invalid classifier combining raw parameters, Stage 1 quality flags, and validated Person 2 fallback engineered features. Includes decision threshold optimization, false-positive/negative error analysis, and final inference on `Test_Data` (350 rows).
+
+---
 
 ## Checks Implemented in P2-Stage 1
 1. **Missing Values (`missing_any`)**: Identifies rows containing `NaN`/`Null` entries across measurement columns (`Sensor_S1`..`S4`).
@@ -24,35 +34,43 @@ This repository section is owned by **Person 2** (Data Quality, Anomaly Detectio
 6. **Malformed Numeric Values (`malformed_numeric`)**: Checks for unparseable numeric strings or values.
 7. **Justified Physical Constraints**: Enforces ONLY genuinely justified physical laws (e.g. `Applied_Voltage_kV < 0`, `Load_Current_A < 0`, `Test_Duration_min <= 0`, `Ambient_Temperature_C < -273.15`).
 
+---
+
 ## How to Run
 
 ```bash
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Execute Stage 1 Audit pipeline
+# 2. Execute Person 1 Stage 1 Notebook
+jupyter notebook notebooks/person1_stage1_dataset_setup.ipynb
+
+# 3. Execute Person 2 Stage 1 Audit pipeline
 python src/run_audit_pipeline.py
 
-# 3. Execute Stage 2 Baseline Supervised Classification pipeline
+# 4. Execute Person 2 Stage 2 Baseline Supervised Classification pipeline
 python src/run_stage2_baseline.py
 
-# 4. Execute Stage 3 Unsupervised Anomaly Detection pipeline
+# 5. Execute Person 2 Stage 3 Unsupervised Anomaly Detection pipeline
 python src/run_stage3_anomaly.py
 
-# 5. Execute Stage 4 Final Validity Classifier pipeline
+# 6. Execute Person 2 Stage 4 Final Validity Classifier pipeline
 python src/run_stage4_final.py
 
-# 6. Run complete automated pytest suite across all 4 stages
+# 7. Run complete automated pytest suite across all test modules (43 tests)
 python -m pytest tests/ -v
 ```
 
+---
+
 ## Generated Outputs (`outputs/`)
 
-- `outputs/data_quality_audit_training.csv` & `data_quality_audit_test.csv` (Stage 1)
-- `outputs/p2_stage2_baseline_comparison.csv` & `p2_stage2_oof_predictions.csv` (Stage 2)
-- `outputs/p2_stage3_anomaly_scores_training.csv` & `p2_stage3_anomaly_scores_test.csv` (Stage 3)
-- `outputs/p2_stage4_model_comparison.csv` & `p2_stage4_threshold_analysis.csv` (Stage 4)
-- `outputs/p2_stage4_oof_predictions.csv` & `p2_stage4_final_test_predictions.csv` (Stage 4)
-- `outputs/p2_stage4_false_positive_analysis.csv` & `p2_stage4_false_negative_analysis.csv` (Stage 4)
-- `outputs/p2_stage4_report.md` & `outputs/p2_stage4_handoff.md` (Stage 4)
-- `outputs/figures/`: Diagnostic plots for all 4 stages.
+- `outputs/p1_stage1_gap_analysis.md` (Person 1 Stage 1)
+- `outputs/data_quality_audit_training.csv` & `data_quality_audit_test.csv` (Person 2 Stage 1)
+- `outputs/p2_stage2_baseline_comparison.csv` & `p2_stage2_oof_predictions.csv` (Person 2 Stage 2)
+- `outputs/p2_stage3_anomaly_scores_training.csv` & `p2_stage3_anomaly_scores_test.csv` (Person 2 Stage 3)
+- `outputs/p2_stage4_model_comparison.csv` & `p2_stage4_threshold_analysis.csv` (Person 2 Stage 4)
+- `outputs/p2_stage4_oof_predictions.csv` & `p2_stage4_final_test_predictions.csv` (Person 2 Stage 4)
+- `outputs/p2_stage4_false_positive_analysis.csv` & `p2_stage4_false_negative_analysis.csv` (Person 2 Stage 4)
+- `outputs/p2_stage4_report.md` & `outputs/p2_stage4_handoff.md` (Person 2 Stage 4)
+- `outputs/figures/`: Diagnostic plots for all stages.
