@@ -1,0 +1,52 @@
+# Person 1 - Stage 8: Threshold Selection Report
+
+## Threshold Candidates
+
+The following thresholds were evaluated on leakage-free out-of-fold probabilities:
+
+|   Threshold |   Num_Flagged |   Flag_Rate(%) |   Invalid_Precision |   Invalid_Recall |   Invalid_F1 |   Balanced_Accuracy |   Accuracy |   TP |   TN |   FP |   FN | Confusion_Matrix       |
+|------------:|--------------:|---------------:|--------------------:|-----------------:|-------------:|--------------------:|-----------:|-----:|-----:|-----:|-----:|:-----------------------|
+|        0.1  |           326 |           32.6 |              0.411  |           1      |       0.5826 |              0.8891 |      0.808 |  134 |  674 |  192 |    0 | [[674, 192], [0, 134]] |
+|        0.15 |           229 |           22.9 |              0.5852 |           1      |       0.7383 |              0.9452 |      0.905 |  134 |  771 |   95 |    0 | [[771, 95], [0, 134]]  |
+|        0.2  |           184 |           18.4 |              0.7283 |           1      |       0.8428 |              0.9711 |      0.95  |  134 |  816 |   50 |    0 | [[816, 50], [0, 134]]  |
+|        0.25 |           157 |           15.7 |              0.8535 |           1      |       0.921  |              0.9867 |      0.977 |  134 |  843 |   23 |    0 | [[843, 23], [0, 134]]  |
+|        0.3  |           148 |           14.8 |              0.9054 |           1      |       0.9504 |              0.9919 |      0.986 |  134 |  852 |   14 |    0 | [[852, 14], [0, 134]]  |
+|        0.35 |           143 |           14.3 |              0.9371 |           1      |       0.9675 |              0.9948 |      0.991 |  134 |  857 |    9 |    0 | [[857, 9], [0, 134]]   |
+|        0.4  |           138 |           13.8 |              0.971  |           1      |       0.9853 |              0.9977 |      0.996 |  134 |  862 |    4 |    0 | [[862, 4], [0, 134]]   |
+|        0.45 |           136 |           13.6 |              0.9779 |           0.9925 |       0.9852 |              0.9945 |      0.996 |  133 |  863 |    3 |    1 | [[863, 3], [1, 133]]   |
+|        0.5  |           132 |           13.2 |              0.9848 |           0.9701 |       0.9774 |              0.9839 |      0.994 |  130 |  864 |    2 |    4 | [[864, 2], [4, 130]]   |
+|        0.55 |           131 |           13.1 |              0.9924 |           0.9701 |       0.9811 |              0.9845 |      0.995 |  130 |  865 |    1 |    4 | [[865, 1], [4, 130]]   |
+|        0.6  |           124 |           12.4 |              1      |           0.9254 |       0.9612 |              0.9627 |      0.99  |  124 |  866 |    0 |   10 | [[866, 0], [10, 124]]  |
+|        0.65 |           123 |           12.3 |              1      |           0.9179 |       0.9572 |              0.959  |      0.989 |  123 |  866 |    0 |   11 | [[866, 0], [11, 123]]  |
+|        0.7  |           116 |           11.6 |              1      |           0.8657 |       0.928  |              0.9328 |      0.982 |  116 |  866 |    0 |   18 | [[866, 0], [18, 116]]  |
+|        0.75 |           103 |           10.3 |              1      |           0.7687 |       0.8692 |              0.8843 |      0.969 |  103 |  866 |    0 |   31 | [[866, 0], [31, 103]]  |
+|        0.8  |            85 |            8.5 |              1      |           0.6343 |       0.7763 |              0.8172 |      0.951 |   85 |  866 |    0 |   49 | [[866, 0], [49, 85]]   |
+|        0.85 |            67 |            6.7 |              1      |           0.5    |       0.6667 |              0.75   |      0.933 |   67 |  866 |    0 |   67 | [[866, 0], [67, 67]]   |
+|        0.9  |            51 |            5.1 |              1      |           0.3806 |       0.5514 |              0.6903 |      0.917 |   51 |  866 |    0 |   83 | [[866, 0], [83, 51]]   |
+
+## Best F1 Region
+
+Thresholds within 0.001 of the best Invalid F1:
+
+|   Threshold |   Invalid_Precision |   Invalid_Recall |   Invalid_F1 |   TP |   TN |   FP |   FN |
+|------------:|--------------------:|-----------------:|-------------:|-----:|-----:|-----:|-----:|
+|        0.4  |              0.971  |           1      |       0.9853 |  134 |  862 |    4 |    0 |
+|        0.45 |              0.9779 |           0.9925 |       0.9852 |  133 |  863 |    3 |    1 |
+
+## Selection Rule
+
+Selected threshold 0.40 from 2 threshold(s) within 0.001 of the best Invalid F1 (0.9853). Primary criterion: Invalid F1. Tie-breaks favored higher Invalid recall, then higher Invalid precision, then fewer false positives and a deterministic lower-threshold choice.
+
+## Selected Threshold
+
+- Selected threshold: `0.40`
+- Best Invalid F1: `0.9853`
+- Selected Invalid Precision: `0.9710`
+- Selected Invalid Recall: `1.0000`
+- Selected Invalid F1: `0.9853`
+- Selected Accuracy: `0.9960`
+- Selected Balanced Accuracy: `0.9977`
+
+## Operational Interpretation
+
+The selected threshold is favored because it preserves the strongest Invalid recall in the near-optimal F1 region while keeping false positives low enough for practical screening use.

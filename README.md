@@ -17,7 +17,8 @@ This section is owned by **Person 1** (Contextual, Regime & Feature Engineering 
 - **Stage 4 (Behaviour & Physical Consistency Analysis)**: Normal-behaviour reference regression models (`src/stage4_behaviour.py`) trained **STRICTLY on Valid historical test records** ($N=700$) to predict expected sensor values under varying operating conditions. Generates residual and consistency features (`p1_max_abs_residual`, `p1_consistency_index`, `p1_sensor_disagreement_index`, `p1_regime_cluster`) without target leakage or row deletion. Generates 9 CSV reports, 12 figures in `outputs/figures/`, markdown report `outputs/p1_stage4_behaviour_consistency_report.md`, handoff report `outputs/p1_stage4_handoff.md`, notebook (`notebooks/person1_stage4_behaviour_consistency_analysis.ipynb`), pipeline script (`src/run_stage4_behaviour.py`), updated feature adapter (`src/person1_adapter.py`), and 15 unit tests.
 - **Stage 5 (Feature Engineering)**: Consolidated, inference-safe feature engineering module (`src/stage5_features.py`) combining quality flags, sensor differences (`S1_minus_S2`, `S1_minus_S3`, `S2_minus_S3`), sensor aggregates (mean, median, std across S1..S3 & S1..S4), sensor disagreement metrics, physical residuals (`p1_max_abs_residual`), physical interactions (`Thermal_Loading_Index`, `Apparent_Power_kVA`, `Apparent_Impedance_Proxy`), and comparative `Sensor_S4` investigation. Generates feature dictionary (`outputs/p1_stage5_feature_dictionary.csv`), summary CSVs, markdown report `outputs/p1_stage5_feature_engineering_report.md`, handoff report `outputs/p1_stage5_handoff.md`, pipeline script (`src/run_stage5_features.py`), notebook (`notebooks/person1_stage5_feature_engineering.ipynb`), and 15 unit tests.
 - **Stage 6 (Build Baseline Detectors)**: Comprehensive evaluation framework (`src/stage6_baselines.py`) implementing 6 baseline detectors: Deterministic Quality Rules, Robust Statistical IQR Outliers, Z-Score Outliers, Isolation Forest, LOF, and Residual/Consistency Thresholds. Includes Precision/Recall/F1/ROC-AUC evaluation, False Positive & False Negative analysis, and operating regime performance breakdown across Heavy HV Load, Heavy Current, High Voltage, and Standard regimes. Generates 6 CSV reports, 6 figures in `outputs/figures/`, report `outputs/p1_stage6_baseline_report.md`, handoff report `outputs/p1_stage6_handoff.md`, pipeline script (`src/run_stage6_baselines.py`), notebook (`notebooks/person1_stage6_baseline_detectors.ipynb`), and 15 unit tests.
-- **Stage 7 (Build ML Classification / Anomaly Models)**: Strict fold-isolated 5-fold Stratified Cross-Validation evaluation (`src/stage7_ml_models.py`) across 15 candidate configurations (3 model architectures: Logistic Regression, Random Forest, HistGradientBoosting x 5 feature sets: Sets A..E). Includes target leakage audit (`outputs/p1_stage7_leakage_audit.md`), decision threshold optimization (0.10–0.90), permutation feature importance, false-positive/negative error analysis, final inference on `Test_Data` (350 rows), pipeline script (`src/run_stage7_ml_models.py`), interactive notebook (`notebooks/person1_stage7_ml_classification.ipynb`), report `outputs/p1_stage7_report.md`, handoff report `outputs/p1_stage7_handoff.md`, and 24 unit tests (142 total tests passing 100%).
+- **Stage 7 (Build ML Classification / Anomaly Models)**: Strict fold-isolated 5-fold Stratified Cross-Validation evaluation (`src/stage7_ml_models.py`) across 15 candidate configurations (3 model architectures: Logistic Regression, Random Forest, HistGradientBoosting x 5 feature sets: Sets A..E). Includes target leakage audit (`outputs/p1_stage7_leakage_audit.md`), decision threshold optimization (0.10–0.90), permutation feature importance, false-positive/negative error analysis, final inference on `Test_Data` (350 rows), pipeline script (`src/run_stage7_ml_models.py`), interactive notebook (`notebooks/person1_stage7_ml_classification.ipynb`), report `outputs/p1_stage7_report.md`, handoff report `outputs/p1_stage7_handoff.md`, and 24 unit tests.
+- **Stage 8 (Validation & Threshold Selection)**: Leakage-free validation of the winning Stage 7 configuration (`Random_Forest__Set_D_Full_Stage5`) using strictly out-of-fold probabilities from `StratifiedKFold(n_splits=5, shuffle=True, random_state=42)`. Adds threshold analysis, fold stability, final confusion matrix, systematic FP/FN inspection, validation report, notebook, reusable module (`src/stage8_validation.py`), and 16 unit tests. Generates `outputs/p1_stage8_gap_analysis.md`, `outputs/p1_stage8_threshold_analysis.csv`, `outputs/p1_stage8_threshold_selection.md`, `outputs/p1_stage8_fold_metrics.csv`, `outputs/p1_stage8_oof_predictions.csv`, `outputs/p1_stage8_false_positive_analysis.csv`, `outputs/p1_stage8_false_negative_analysis.csv`, `outputs/p1_stage8_misclassification_report.md`, `outputs/p1_stage8_validation_report.md`, and 3 figures in `outputs/figures/`.
 
 
 ---
@@ -70,19 +71,22 @@ python src/run_stage6_baselines.py
 # 8. Execute Person 1 Stage 7 ML Classification & Anomaly Models pipeline
 python src/run_stage7_ml_models.py
 
-# 9. Execute Person 2 Stage 1 Audit pipeline
+# 9. Execute Person 1 Stage 8 Validation & Threshold Selection pipeline
+python src/run_stage8_validation.py
+
+# 10. Execute Person 2 Stage 1 Audit pipeline
 python src/run_audit_pipeline.py
 
-# 10. Execute Person 2 Stage 2 Baseline Supervised Classification pipeline
+# 11. Execute Person 2 Stage 2 Baseline Supervised Classification pipeline
 python src/run_stage2_baseline.py
 
-# 11. Execute Person 2 Stage 3 Unsupervised Anomaly Detection pipeline
+# 12. Execute Person 2 Stage 3 Unsupervised Anomaly Detection pipeline
 python src/run_stage3_anomaly.py
 
-# 12. Execute Person 2 Stage 4 Final Validity Classifier pipeline
+# 13. Execute Person 2 Stage 4 Final Validity Classifier pipeline
 python src/run_stage4_final.py
 
-# 13. Run complete automated pytest suite across all test modules (142 tests)
+# 14. Run complete automated pytest suite across all test modules
 python -m pytest tests/ -v
 ```
 
@@ -119,6 +123,12 @@ python -m pytest tests/ -v
 - `outputs/p1_stage7_threshold_analysis.csv` & `p1_stage7_feature_importance.csv` (Person 1 Stage 7)
 - `outputs/p1_stage7_false_positive_analysis.csv` & `p1_stage7_false_negative_analysis.csv` (Person 1 Stage 7)
 - `outputs/p1_stage7_test_predictions.csv` & `p1_stage7_handoff.md` (Person 1 Stage 7)
+- `outputs/p1_stage8_gap_analysis.md` & `p1_stage8_threshold_selection.md` (Person 1 Stage 8)
+- `outputs/p1_stage8_threshold_analysis.csv` & `p1_stage8_fold_metrics.csv` (Person 1 Stage 8)
+- `outputs/p1_stage8_oof_predictions.csv` & `p1_stage8_confusion_matrix.png` (Person 1 Stage 8)
+- `outputs/p1_stage8_false_positive_analysis.csv` & `p1_stage8_false_negative_analysis.csv` (Person 1 Stage 8)
+- `outputs/p1_stage8_misclassification_report.md` & `p1_stage8_validation_report.md` (Person 1 Stage 8)
+- `notebooks/person1_stage8_validation_threshold_selection.ipynb` (Person 1 Stage 8)
 - `outputs/data_quality_audit_training.csv` & `data_quality_audit_test.csv` (Person 2 Stage 1)
 - `outputs/p2_stage2_baseline_comparison.csv` & `p2_stage2_oof_predictions.csv` (Person 2 Stage 2)
 - `outputs/p2_stage3_anomaly_scores_training.csv` & `p2_stage3_anomaly_scores_test.csv` (Person 2 Stage 3)
