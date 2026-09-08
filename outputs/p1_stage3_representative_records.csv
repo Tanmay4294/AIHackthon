@@ -1,0 +1,5 @@
+Test_ID,Applied_Voltage_kV,Load_Current_A,Ambient_Temperature_C,Sensor_S1,Sensor_S2,Sensor_S3,Sensor_S4,Sensor_Spread,DataQualityIssue,Validity_Label,CaseCategory
+TRN-0411,19.2432,107.3619,29.4673,15.108,16.6481,18.3834,44.539,29.431,False,Valid,Unusual Valid
+TRN-0533,17.5311,72.927,28.746,12.6016,13.0752,,56.541,43.9394,True,Invalid,Quality Issue Invalid
+TRN-0097,24.0983,15.5749,32.5565,12.5641,10.8077,5.4559,72.9077,67.4518,False,Invalid,Missing S4 Invalid
+TRN-0458,20.8054,64.9584,26.8743,14.1824,22.0046,17.7369,45.5514,31.369,False,Invalid,Sensor Disagreement Invalid

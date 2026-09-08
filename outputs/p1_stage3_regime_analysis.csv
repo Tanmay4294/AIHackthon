@@ -1,0 +1,16 @@
+Test_ID,Regime_Category,Applied_Voltage_kV,Load_Current_A,Ambient_Temperature_C,Sensor_Spread,Validity_Label,Operating_Description
+TRN-0411,Unusual Heavy-Load (Valid),19.2432,107.3619,29.4673,29.431,Valid,High load current > 95A operating under legitimate heavy equipment testing regime.
+TRN-0707,Unusual Heavy-Load (Valid),13.5008,108.8999,35.5415,31.387500000000003,Valid,High load current > 95A operating under legitimate heavy equipment testing regime.
+TRN-0095,Unusual Heavy-Load (Valid),27.0232,98.1134,49.9673,24.736900000000002,Valid,High load current > 95A operating under legitimate heavy equipment testing regime.
+TRN-0307,Unusual Heavy-Load (Valid),30.2039,105.7357,25.4332,19.0439,Valid,High load current > 95A operating under legitimate heavy equipment testing regime.
+TRN-0937,Unusual Heavy-Load (Valid),18.9717,104.0403,31.8576,33.2876,Valid,High load current > 95A operating under legitimate heavy equipment testing regime.
+TRN-0262,High Voltage Regime (Valid),30.7232,28.9017,38.9336,38.726200000000006,Valid,High voltage > 28kV operating regime validly recorded.
+TRN-0307,High Voltage Regime (Valid),30.2039,105.7357,25.4332,19.0439,Valid,High voltage > 28kV operating regime validly recorded.
+TRN-0542,High Voltage Regime (Valid),29.8252,29.6371,52.0927,35.783699999999996,Valid,High voltage > 28kV operating regime validly recorded.
+TRN-0268,High Voltage Regime (Valid),31.5596,18.2128,38.845,56.577299999999994,Valid,High voltage > 28kV operating regime validly recorded.
+TRN-0408,High Voltage Regime (Valid),31.1979,55.0224,21.7758,13.7104,Valid,High voltage > 28kV operating regime validly recorded.
+TRN-0704,Normal Operating Range (Invalid),24.0661,67.4291,32.3245,45.8402,Invalid,"Appears statistically normal across physical features, but fails historical validation due to subtle internal inconsistency."
+TRN-0458,Normal Operating Range (Invalid),20.8054,64.9584,26.8743,31.369,Invalid,"Appears statistically normal across physical features, but fails historical validation due to subtle internal inconsistency."
+TRN-0551,Normal Operating Range (Invalid),23.5579,70.8232,32.6027,9.1085,Invalid,"Appears statistically normal across physical features, but fails historical validation due to subtle internal inconsistency."
+TRN-0839,Normal Operating Range (Invalid),17.7608,75.605,32.4239,49.7827,Invalid,"Appears statistically normal across physical features, but fails historical validation due to subtle internal inconsistency."
+TRN-0171,Normal Operating Range (Invalid),15.6952,76.0224,22.3138,55.61030000000001,Invalid,"Appears statistically normal across physical features, but fails historical validation due to subtle internal inconsistency."

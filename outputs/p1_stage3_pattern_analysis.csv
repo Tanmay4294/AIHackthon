@@ -1,0 +1,13 @@
+Pattern_Name,Total_Records,Valid_Count,Invalid_Count,Invalid_Rate(%),Valid_Rate(%),Baseline_Invalid_Rate(%),Lift_vs_Baseline
+Zero Sensor Reading,3,0,3,100.0,0.0,13.4,7.46
+Negative Sensor S2,1,0,1,100.0,0.0,13.4,7.46
+Duplicate Measurement Pair,24,0,24,100.0,0.0,13.4,7.46
+Missing Any Feature,44,29,15,34.09,65.91,13.4,2.54
+Definite Quality Issue,44,29,15,34.09,65.91,13.4,2.54
+High Sensor Spread (>50),156,131,25,16.03,83.97,13.4,1.2
+High Apparent Power (>2000kVA),184,160,24,13.04,86.96,13.4,0.97
+High Load Current (>95A),165,144,21,12.73,87.27,13.4,0.95
+High Ambient Temp (>45C),80,70,10,12.5,87.5,13.4,0.93
+Low Applied Voltage (<12kV),167,147,20,11.98,88.02,13.4,0.89
+High Applied Voltage (>28kV),192,170,22,11.46,88.54,13.4,0.86
+Missing Sensor S4,29,29,0,0.0,100.0,13.4,0.0
