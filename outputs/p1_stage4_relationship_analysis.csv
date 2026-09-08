@@ -1,0 +1,23 @@
+Category,Variable_1,Variable_2,Sample_Count,Pearson_r,Pearson_p,Spearman_rho,Spearman_p,Relationship_Type
+Operating_vs_Sensor,Load_Current_A,Sensor_S1,994,0.3999,0.0,0.3929,0.0,Moderate
+Operating_vs_Sensor,Load_Current_A,Sensor_S2,998,0.6278,0.0,0.6502,0.0,Strong Linear
+Operating_vs_Sensor,Load_Current_A,Sensor_S3,993,0.3091,0.0,0.3032,0.0,Moderate
+Operating_vs_Sensor,Load_Current_A,Sensor_S4,971,-0.0167,0.603353,-0.0127,0.692534,Weak
+Operating_vs_Sensor,Applied_Voltage_kV,Sensor_S1,994,0.8416,0.0,0.8783,0.0,Strong Linear
+Operating_vs_Sensor,Applied_Voltage_kV,Sensor_S2,998,0.6643,0.0,0.693,0.0,Strong Linear
+Operating_vs_Sensor,Applied_Voltage_kV,Sensor_S3,993,0.9075,0.0,0.9327,0.0,Strong Linear
+Operating_vs_Sensor,Applied_Voltage_kV,Sensor_S4,971,-0.0487,0.129339,-0.0506,0.115221,Weak
+Operating_vs_Sensor,Ambient_Temperature_C,Sensor_S1,994,0.0019,0.952202,-0.0003,0.993345,Weak
+Operating_vs_Sensor,Ambient_Temperature_C,Sensor_S2,998,0.0338,0.285798,0.0343,0.278841,Weak
+Operating_vs_Sensor,Ambient_Temperature_C,Sensor_S3,993,0.0064,0.840585,0.007,0.824771,Weak
+Operating_vs_Sensor,Ambient_Temperature_C,Sensor_S4,971,0.0073,0.819363,0.001,0.974433,Weak
+Operating_vs_Sensor,Test_Duration_min,Sensor_S1,994,-0.0208,0.513104,-0.0301,0.343739,Weak
+Operating_vs_Sensor,Test_Duration_min,Sensor_S2,998,0.0037,0.90676,-0.0021,0.947795,Weak
+Operating_vs_Sensor,Test_Duration_min,Sensor_S3,993,-0.017,0.592278,-0.0214,0.501473,Weak
+Operating_vs_Sensor,Test_Duration_min,Sensor_S4,971,-0.0211,0.510632,-0.0168,0.601259,Weak
+Cross_Sensor_Pair,Sensor_S1,Sensor_S2,992,0.787,0.0,0.8498,0.0,Strong Inter-Sensor Alignment
+Cross_Sensor_Pair,Sensor_S1,Sensor_S3,987,0.868,0.0,0.9239,0.0,Strong Inter-Sensor Alignment
+Cross_Sensor_Pair,Sensor_S1,Sensor_S4,965,-0.0319,0.322208,-0.0366,0.255756,Moderate Alignment
+Cross_Sensor_Pair,Sensor_S2,Sensor_S3,991,0.7702,0.0,0.8211,0.0,Strong Inter-Sensor Alignment
+Cross_Sensor_Pair,Sensor_S2,Sensor_S4,969,-0.0264,0.410842,-0.0235,0.464487,Moderate Alignment
+Cross_Sensor_Pair,Sensor_S3,Sensor_S4,964,-0.0707,0.028223,-0.0643,0.046094,Moderate Alignment

@@ -1,0 +1,5 @@
+Target_Sensor,Valid_Train_Count,R2_Score,MAE,RMSE,Predictors
+Sensor_S1,866,0.9977,0.1447,0.183,"Applied_Voltage_kV, Load_Current_A, Ambient_Temperature_C, Test_Duration_min"
+Sensor_S2,866,0.9976,0.1375,0.1718,"Applied_Voltage_kV, Load_Current_A, Ambient_Temperature_C, Test_Duration_min"
+Sensor_S3,866,0.9964,0.2356,0.2958,"Applied_Voltage_kV, Load_Current_A, Ambient_Temperature_C, Test_Duration_min"
+Sensor_S4,837,0.0043,9.8145,12.5722,"Applied_Voltage_kV, Load_Current_A, Ambient_Temperature_C, Test_Duration_min"

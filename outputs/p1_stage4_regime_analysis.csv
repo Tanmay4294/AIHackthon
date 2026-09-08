@@ -1,0 +1,5 @@
+Regime_Code,Regime_Name,Total_Records,Valid_Count,Invalid_Count,Invalid_Rate(%),Mean_Current_A,Mean_Voltage_kV
+1,Heavy HV Load,94,83,11,11.7,98.36,28.68
+2,Heavy Current,179,155,24,13.41,97.94,16.47
+3,High Voltage,223,194,29,13.0,50.09,28.71
+4,Standard,504,434,70,13.89,50.25,16.05

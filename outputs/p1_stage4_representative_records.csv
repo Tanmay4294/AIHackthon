@@ -1,0 +1,11 @@
+Test_ID,Category,Load_Current_A,Max_Abs_Residual,Consistency_Index,Validity_Label,Residual_Interpretation
+TRN-0411,Unusual Heavy Load (Valid),107.3619,5.0690145373841915,0.4232917496750504,Valid,"High load current > 95A, but residuals remain small/consistent with expected heavy-load model."
+TRN-0707,Unusual Heavy Load (Valid),108.8999,5.730852034660323,0.39189764709883623,Valid,"High load current > 95A, but residuals remain small/consistent with expected heavy-load model."
+TRN-0095,Unusual Heavy Load (Valid),98.1134,5.9123999462972066,0.3587629826452315,Valid,"High load current > 95A, but residuals remain small/consistent with expected heavy-load model."
+TRN-0307,Unusual Heavy Load (Valid),105.7357,8.860399987315432,0.30506320950289406,Valid,"High load current > 95A, but residuals remain small/consistent with expected heavy-load model."
+TRN-0937,Unusual Heavy Load (Valid),104.0403,0.29013443856076293,0.8462831239109994,Valid,"High load current > 95A, but residuals remain small/consistent with expected heavy-load model."
+TRN-0533,Normal Parameters (Invalid),72.927,7.106398709854304,0.28134144314065623,Invalid,"Raw parameters appear normal, but residual analysis reveals sensor disagreement or prediction deviation."
+TRN-0704,Normal Parameters (Invalid),67.4291,11.436283720968802,0.15291444337052457,Invalid,"Raw parameters appear normal, but residual analysis reveals sensor disagreement or prediction deviation."
+TRN-0458,Normal Parameters (Invalid),64.9584,8.031187027430937,0.261158219322137,Invalid,"Raw parameters appear normal, but residual analysis reveals sensor disagreement or prediction deviation."
+TRN-0025,Normal Parameters (Invalid),64.1575,7.730625115314766,0.23015827921943496,Invalid,"Raw parameters appear normal, but residual analysis reveals sensor disagreement or prediction deviation."
+TRN-0076,Normal Parameters (Invalid),51.4139,28.642826301628876,0.09551194602557389,Invalid,"Raw parameters appear normal, but residual analysis reveals sensor disagreement or prediction deviation."

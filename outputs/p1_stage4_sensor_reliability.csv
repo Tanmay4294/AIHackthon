@@ -1,0 +1,5 @@
+Sensor,Normal_Model_R2,Normal_Model_RMSE,AbsResidual_EffectSize,Reliability_Rank
+Sensor_S1,0.9977,0.183,1.6952,High
+Sensor_S2,0.9976,0.1718,1.8817,High
+Sensor_S3,0.9964,0.2958,1.1902,High
+Sensor_S4,0.0043,12.5722,0.0132,Low

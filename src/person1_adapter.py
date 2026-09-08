@@ -2,10 +2,10 @@
 CPRI Hackathon — Task 01 — Person 2 / Person 1 Feature Adapter Interface
 
 Provides a clean interface for integrating Person 1's contextual, residual, consistency,
-and regime features.
+and regime features into Person 2's workflow.
 
-If Person 1 feature files are present in the repository, this module loads them directly.
-If Person 1 feature files are NOT present, this module falls back to generating validated
+If Person 1 feature files/columns are present in the DataFrame, this module extracts them directly.
+If Person 1 feature columns are NOT present, this module falls back to generating validated
 Person 2 engineered/contextual features (Apparent_Power_kVA, Sensor_Spread, Sensor_Mean,
 Sensor_S1_S2_Ratio, Sensor_S3_S4_Ratio) and clearly labels them as fallback features.
 """
@@ -25,7 +25,10 @@ def has_person1_features(df: pd.DataFrame) -> bool:
         "p1_residual_error",
         "p1_regime_cluster",
         "p1_consistency_index",
-        "p1_regime_abnormality"
+        "p1_regime_abnormality",
+        "p1_max_abs_residual",
+        "p1_mean_abs_residual",
+        "p1_sensor_disagreement_index"
     ]
     return any(col in df.columns for col in person1_indicators)
 
@@ -40,7 +43,7 @@ def get_person1_features(df: pd.DataFrame) -> Tuple[pd.DataFrame, bool, List[str
         feature_names: List of generated/extracted feature names.
     """
     if has_person1_features(df):
-        person1_cols = [c for c in df.columns if c.startswith("p1_")]
+        person1_cols = [c for c in df.columns if c.startswith("p1_") or "Residual" in c or "Expected" in c]
         return df[person1_cols].copy(), True, person1_cols
         
     # Fallback to Person 2 Engineered / Contextual Features
