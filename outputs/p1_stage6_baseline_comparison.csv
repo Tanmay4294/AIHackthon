@@ -1,0 +1,7 @@
+Method,Feature_Basis,Threshold,Num_Flagged,Flag_Percentage(%),Invalid_Precision,Invalid_Recall,Invalid_F1,Balanced_Accuracy,Accuracy,ROC_AUC,PR_AUC,TP,TN,FP,FN
+Isolation_Forest,Physical Features,Contamination=auto,188,18.8,0.3298,0.4627,0.3851,0.6586,0.802,0.7246,0.3413,62,740,126,72
+LOF_Local_Outlier_Factor,Physical Features,n_neighbors=20,24,2.4,1.0,0.1791,0.3038,0.5896,0.89,0.8426,0.7116,24,866,0,110
+Residual_Consistency_Threshold,Stage 4 Residual Features,max_abs_res > 3.0 or consistency < 0.1,791,79.1,0.158,0.9328,0.2703,0.5819,0.325,0.6124,0.1589,125,200,666,9
+IQR_Statistical_Outlier,Physical Features,Q1-1.5*IQR or Q3+1.5*IQR,36,3.6,0.6111,0.1642,0.2588,0.574,0.874,0.574,0.2123,22,852,14,112
+ZScore_Statistical,Physical Features,Max |Z| > 3.0,21,2.1,0.9048,0.1418,0.2452,0.5697,0.883,0.7193,0.4669,19,864,2,115
+Deterministic_Quality,Stage 1 Quality Flags,Any Quality Flag == True,48,4.8,0.3958,0.1418,0.2088,0.5542,0.856,0.5537,0.165,19,837,29,115

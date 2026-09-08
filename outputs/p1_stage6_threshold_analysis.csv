@@ -1,0 +1,7 @@
+Method,Threshold,Num_Flagged,Flag_Percentage(%),Invalid_Precision,Invalid_Recall,Invalid_F1
+Isolation_Forest,Contamination=auto,188,18.8,0.3298,0.4627,0.3851
+LOF_Local_Outlier_Factor,n_neighbors=20,24,2.4,1.0,0.1791,0.3038
+Residual_Consistency_Threshold,max_abs_res > 3.0 or consistency < 0.1,791,79.1,0.158,0.9328,0.2703
+IQR_Statistical_Outlier,Q1-1.5*IQR or Q3+1.5*IQR,36,3.6,0.6111,0.1642,0.2588
+ZScore_Statistical,Max |Z| > 3.0,21,2.1,0.9048,0.1418,0.2452
+Deterministic_Quality,Any Quality Flag == True,48,4.8,0.3958,0.1418,0.2088
