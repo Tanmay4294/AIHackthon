@@ -21,6 +21,7 @@ This section is owned by **Person 1** (Contextual, Regime & Feature Engineering 
 - **Stage 8 (Validation & Threshold Selection)**: Leakage-free validation of the winning Stage 7 configuration (`Random_Forest__Set_D_Full_Stage5`) using strictly out-of-fold probabilities from `StratifiedKFold(n_splits=5, shuffle=True, random_state=42)`. Adds threshold analysis, fold stability, final confusion matrix, systematic FP/FN inspection, validation report, notebook, reusable module (`src/stage8_validation.py`), and 16 unit tests. Generates `outputs/p1_stage8_gap_analysis.md`, `outputs/p1_stage8_threshold_analysis.csv`, `outputs/p1_stage8_threshold_selection.md`, `outputs/p1_stage8_fold_metrics.csv`, `outputs/p1_stage8_oof_predictions.csv`, `outputs/p1_stage8_false_positive_analysis.csv`, `outputs/p1_stage8_false_negative_analysis.csv`, `outputs/p1_stage8_misclassification_report.md`, `outputs/p1_stage8_validation_report.md`, and 3 figures in `outputs/figures/`.
 - **Stage 9 (Final Hybrid Detector)**: Historical OOF comparison of supervised-only, quality, physical consistency, anomaly, combined, and full-hybrid approaches. The validated Random Forest plus full Stage 5 feature set remains selected because soft hybrid evidence adds false positives without improving recall. Hard corruption flags are an inference-safe safety precedence; unusual operating regimes are not rejected solely for being extreme. Implemented in `src/final_hybrid_detector.py` with reports `outputs/p1_stage9_gap_analysis.md`, `outputs/p1_stage9_hybrid_comparison.csv`, and `outputs/p1_stage9_precedence_rules.md`.
 - **Stage 10 (Final Test Predictions)**: `src/run_final_detector.py` loads the raw workbook, fits only on `Training_Data`, applies the locked `0.40` threshold, validates exactly 350 predictions, and writes the official two-column submission to `outputs/task1_predictions.csv`. Diagnostics and unlabeled distribution checks are saved separately. Run with `python src/run_final_detector.py`.
+- **Stage 11 (Integration & Final Deliverables)**: Competition-facing packaging around the locked Stage 9/10 detector, without changing its Random Forest `Set_D_Full_Stage5` model, threshold `0.40`, or feature-generation logic. Historical OOF metrics are Precision `0.9710`, Recall `1.0000`, F1 `0.9853`, Balanced Accuracy `0.9977`, Accuracy `0.9960`, ROC-AUC `0.9999`, and PR-AUC `0.9991`. Build the official Task 01 CSV with `python src/build_task1_submission.py`; it writes exactly `Test_ID,Validity_Label` to `outputs/task1_predictions.csv`. Merge teammate Task 02 output by `Test_ID` with `python src/build_final_team_submission.py --task2 path\to\task2_predictions.csv`; the final team schema follows Sample_Submission: `Test_ID,Predicted_Reference_Parameter,Validity_Label`. See `outputs/p1_stage11_model_handoff.md` and `walkthrough.md`.
 
 
 ---
@@ -79,19 +80,22 @@ python src/run_stage8_validation.py
 # 10. Execute Person 1 Stage 9/10 final detector and Test_Data submission
 python src/run_final_detector.py
 
-# 11. Execute Person 2 Stage 1 Audit pipeline
+# 11. Build the official Person 1 Task 01 submission
+python src/build_task1_submission.py
+
+# 12. Execute Person 2 Stage 1 Audit pipeline
 python src/run_audit_pipeline.py
 
-# 12. Execute Person 2 Stage 2 Baseline Supervised Classification pipeline
+# 13. Execute Person 2 Stage 2 Baseline Supervised Classification pipeline
 python src/run_stage2_baseline.py
 
-# 13. Execute Person 2 Stage 3 Unsupervised Anomaly Detection pipeline
+# 14. Execute Person 2 Stage 3 Unsupervised Anomaly Detection pipeline
 python src/run_stage3_anomaly.py
 
-# 14. Execute Person 2 Stage 4 Final Validity Classifier pipeline
+# 15. Execute Person 2 Stage 4 Final Validity Classifier pipeline
 python src/run_stage4_final.py
 
-# 15. Run complete automated pytest suite across all test modules
+# 16. Run complete automated pytest suite across all test modules
 python -m pytest tests/ -v
 ```
 
@@ -138,6 +142,9 @@ python -m pytest tests/ -v
 - `outputs/task1_predictions.csv` (official Person 1 Stage 10 submission; exactly `Test_ID`, `Validity_Label`)
 - `outputs/p1_stage10_test_predictions_diagnostics.csv`, `outputs/p1_stage10_test_prediction_report.md`, and `outputs/p1_stage10_distribution_check.md` (Person 1 Stage 10 diagnostics)
 - `notebooks/person1_stage9_10_final_detector.ipynb` (Person 1 Stage 9/10)
+- `outputs/p1_stage11_gap_analysis.md`, `p1_stage11_model_handoff.md`, `p1_stage11_final_config.json`, `p1_stage11_feature_methodology.md`, and `p1_stage11_methodology_note.md` (Person 1 Stage 11)
+- `src/build_task1_submission.py` and `src/build_final_team_submission.py` (reproducible Task 01 build and validated Task 02 merge interface)
+- `notebooks/person1_stage11_integration_final_deliverables.ipynb` and `walkthrough.md` (Person 1 Stage 11)
 - `outputs/data_quality_audit_training.csv` & `data_quality_audit_test.csv` (Person 2 Stage 1)
 - `outputs/p2_stage2_baseline_comparison.csv` & `p2_stage2_oof_predictions.csv` (Person 2 Stage 2)
 - `outputs/p2_stage3_anomaly_scores_training.csv` & `p2_stage3_anomaly_scores_test.csv` (Person 2 Stage 3)

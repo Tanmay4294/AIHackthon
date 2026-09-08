@@ -190,8 +190,13 @@ class FinalHybridDetector:
         return np.asarray(self.pipeline.predict_proba(x)[:, 1], dtype=float)
 
     def predict(self, df: pd.DataFrame) -> np.ndarray:
-        probabilities = self.predict_proba(df)
-        return np.where(probabilities >= self.threshold, "Invalid", "Valid")
+        enriched = self._features(df)
+        x = prepare_stage5_feature_matrix(enriched, feature_names=self.feature_names)
+        probabilities = np.asarray(self.pipeline.predict_proba(x)[:, 1], dtype=float)
+        # Keep the public prediction API aligned with the documented Stage 9/10
+        # precedence used by predict_with_diagnostics and the official output.
+        final_invalid = (probabilities >= self.threshold) | _hard_quality_mask(enriched).to_numpy()
+        return np.where(final_invalid, "Invalid", "Valid")
 
     def predict_with_diagnostics(self, df: pd.DataFrame) -> pd.DataFrame:
         enriched = self._features(df)
@@ -223,4 +228,3 @@ class FinalHybridDetector:
 def fit_final_detector(training_df: Optional[pd.DataFrame] = None, **kwargs: Any) -> FinalHybridDetector:
     detector = FinalHybridDetector(**kwargs)
     return detector.fit(load_training_data() if training_df is None else training_df)
-

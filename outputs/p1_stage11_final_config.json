@@ -1,0 +1,20 @@
+{
+  "task": "Task 01 Validity_Label classification",
+  "model": "Random_Forest",
+  "feature_set": "Set_D_Full_Stage5",
+  "decision_threshold": 0.4,
+  "random_state": 42,
+  "training_rows": 1000,
+  "validation": {
+    "method": "StratifiedKFold",
+    "n_splits": 5,
+    "shuffle": true,
+    "threshold_source": "historical OOF predictions only",
+    "metrics": {"invalid_precision": 0.971, "invalid_recall": 1.0, "invalid_f1": 0.9853, "balanced_accuracy": 0.9977, "accuracy": 0.996, "roc_auc": 0.9999, "pr_auc": 0.9991, "tp": 134, "tn": 862, "fp": 4, "fn": 0}
+  },
+  "preprocessing": ["Stage 1/2 inference-safe quality flags", "Stage 4 normal-behaviour residual models fitted from Training_Data", "Stage 5 sensor differences, aggregates, disagreement measures, interactions, and residual features", "median imputation inside sklearn pipeline"],
+  "classifier": {"type": "RandomForestClassifier", "n_estimators": 200, "max_depth": 12, "min_samples_split": 5, "class_weight": "balanced", "criterion": "gini", "max_features": "sqrt", "random_state": 42},
+  "excluded_features": ["Test_ID", "Validity_Label", "Reference_Parameter", "missing_columns"],
+  "official_output_columns": ["Test_ID", "Validity_Label"],
+  "features": ["Applied_Voltage_kV", "Load_Current_A", "Ambient_Temperature_C", "Test_Duration_min", "Sensor_S1", "Sensor_S2", "Sensor_S3", "Sensor_S4", "missing_any", "missing_critical_measurement", "non_finite_value", "duplicate_full_row", "duplicate_test_id", "duplicate_measurement_pair", "malformed_numeric", "invalid_voltage", "invalid_current", "invalid_duration", "invalid_ambient_temp", "sensor_s2_negative", "sensor_zero_reading", "data_quality_issue_count", "data_quality_issue", "S1_minus_S2", "S1_minus_S3", "S1_minus_S4", "S2_minus_S3", "S2_minus_S4", "S3_minus_S4", "sensor_mean_S1_S2_S3", "sensor_median_S1_S2_S3", "sensor_std_S1_S2_S3", "sensor_mean_S1_S2_S3_S4", "sensor_median_S1_S2_S3_S4", "sensor_std_S1_S2_S3_S4", "max_minus_min_sensors", "pairwise_abs_diff_mean", "pairwise_abs_diff_max", "Apparent_Power_kVA", "Thermal_Loading_Index", "Apparent_Impedance_Proxy", "Sensor_S1_Expected", "Sensor_S1_Residual", "Sensor_S1_AbsResidual", "Sensor_S2_Expected", "Sensor_S2_Residual", "Sensor_S2_AbsResidual", "Sensor_S3_Expected", "Sensor_S3_Residual", "Sensor_S3_AbsResidual", "Sensor_S4_Expected", "Sensor_S4_Residual", "Sensor_S4_AbsResidual", "p1_max_abs_residual", "p1_mean_abs_residual", "p1_residual_error", "p1_consistency_index", "p1_sensor_disagreement_index", "p1_regime_cluster"]
+}
