@@ -12,6 +12,7 @@ The objective of **Task 01** is to identify abnormal/unreliable electrical tests
 This section is owned by **Person 1** (Contextual, Regime & Feature Engineering Lead).
 
 - **Stage 1 (Dataset & Environment Setup)**: Modular dataset loader (`src/dataset_loader.py`), programmatic Excel sheet inspection, schema separation (isolating physical features from targets and IDs), relative path resolution, setup notebook (`notebooks/person1_stage1_dataset_setup.ipynb`), and 18 automated unit tests.
+- **Stage 2 (Data-Quality Audit)**: Comprehensive, reproducible, non-destructive audit layer (`src/data_quality_audit.py`). Directly reuses Person 2 Stage 1 quality flags (`quality_features.py`) and dataset loader (`dataset_loader.py`). Enforces zero data deletion (1,000 training and 350 test rows preserved) and zero target leakage. Generates 7 CSV reports, 8 figures in `outputs/figures/`, markdown report `outputs/p1_stage2_data_quality_report.md`, interactive notebook (`notebooks/person1_stage2_data_quality_audit.ipynb`), pipeline script (`src/run_data_quality_audit.py`), and 16 unit tests.
 
 ---
 
@@ -25,7 +26,7 @@ This section is owned by **Person 2** (Data Quality, Anomaly Detection & Classif
 
 ---
 
-## Checks Implemented in P2-Stage 1
+## Checks Implemented in P2-Stage 1 & Reused in P1-Stage 2
 1. **Missing Values (`missing_any`)**: Identifies rows containing `NaN`/`Null` entries across measurement columns (`Sensor_S1`..`S4`).
 2. **Non-Finite Values (`non_finite_value`)**: Detects ONLY actual `+Infinity` or `-Infinity` values (`np.isinf()`). NaNs are excluded and reported under missing values.
 3. **Duplicate Complete Rows (`duplicate_full_row`)**: Detects exact 100% duplicate records across all columns including `Test_ID`.
@@ -42,22 +43,25 @@ This section is owned by **Person 2** (Data Quality, Anomaly Detection & Classif
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Execute Person 1 Stage 1 Notebook
+# 2. Execute Person 1 Stage 1 Setup Notebook
 jupyter notebook notebooks/person1_stage1_dataset_setup.ipynb
 
-# 3. Execute Person 2 Stage 1 Audit pipeline
+# 3. Execute Person 1 Stage 2 Data-Quality Audit pipeline
+python src/run_data_quality_audit.py
+
+# 4. Execute Person 2 Stage 1 Audit pipeline
 python src/run_audit_pipeline.py
 
-# 4. Execute Person 2 Stage 2 Baseline Supervised Classification pipeline
+# 5. Execute Person 2 Stage 2 Baseline Supervised Classification pipeline
 python src/run_stage2_baseline.py
 
-# 5. Execute Person 2 Stage 3 Unsupervised Anomaly Detection pipeline
+# 6. Execute Person 2 Stage 3 Unsupervised Anomaly Detection pipeline
 python src/run_stage3_anomaly.py
 
-# 6. Execute Person 2 Stage 4 Final Validity Classifier pipeline
+# 7. Execute Person 2 Stage 4 Final Validity Classifier pipeline
 python src/run_stage4_final.py
 
-# 7. Run complete automated pytest suite across all test modules (43 tests)
+# 8. Run complete automated pytest suite across all test modules (59 tests)
 python -m pytest tests/ -v
 ```
 
@@ -66,6 +70,11 @@ python -m pytest tests/ -v
 ## Generated Outputs (`outputs/`)
 
 - `outputs/p1_stage1_gap_analysis.md` (Person 1 Stage 1)
+- `outputs/p1_stage2_gap_analysis.md` & `p1_stage2_data_quality_report.md` (Person 1 Stage 2)
+- `outputs/p1_stage2_missing_value_report.csv` (Person 1 Stage 2)
+- `outputs/p1_stage2_duplicate_report.csv` & `p1_stage2_repeated_test_id_report.csv` (Person 1 Stage 2)
+- `outputs/p1_stage2_numeric_statistics.csv` & `p1_stage2_outlier_candidates.csv` (Person 1 Stage 2)
+- `outputs/p1_stage2_quality_flags_training.csv` & `p1_stage2_quality_flags_test.csv` (Person 1 Stage 2)
 - `outputs/data_quality_audit_training.csv` & `data_quality_audit_test.csv` (Person 2 Stage 1)
 - `outputs/p2_stage2_baseline_comparison.csv` & `p2_stage2_oof_predictions.csv` (Person 2 Stage 2)
 - `outputs/p2_stage3_anomaly_scores_training.csv` & `p2_stage3_anomaly_scores_test.csv` (Person 2 Stage 3)
@@ -73,4 +82,4 @@ python -m pytest tests/ -v
 - `outputs/p2_stage4_oof_predictions.csv` & `p2_stage4_final_test_predictions.csv` (Person 2 Stage 4)
 - `outputs/p2_stage4_false_positive_analysis.csv` & `p2_stage4_false_negative_analysis.csv` (Person 2 Stage 4)
 - `outputs/p2_stage4_report.md` & `outputs/p2_stage4_handoff.md` (Person 2 Stage 4)
-- `outputs/figures/`: Diagnostic plots for all stages.
+- `outputs/figures/`: Diagnostic plots for all stages (including 8 Person 1 Stage 2 figures).

@@ -1,0 +1,12 @@
+Column,DataType,MissingCount,MissingPct,AffectedCount,AffectedSampleIDs
+Test_ID,str,0,0.0,0,None
+Applied_Voltage_kV,float64,0,0.0,0,None
+Load_Current_A,float64,0,0.0,0,None
+Ambient_Temperature_C,float64,0,0.0,0,None
+Test_Duration_min,float64,0,0.0,0,None
+Sensor_S1,float64,6,0.6,6,"TRN-0872, TRN-0793, TRN-0802, TRN-0410, TRN-0808, TRN-0918"
+Sensor_S2,float64,2,0.2,2,"TRN-0718, TRN-0768"
+Sensor_S3,float64,7,0.7,7,"TRN-0533, TRN-0120, TRN-0944, TRN-0797, TRN-0631, TRN-0009, TRN-0690"
+Sensor_S4,float64,29,2.9,29,"TRN-0140, TRN-0405, TRN-0257, TRN-0434, TRN-0920, TRN-0324, TRN-0129, TRN-0995, TRN-0828, TRN-0969"
+Reference_Parameter,float64,0,0.0,0,None
+Validity_Label,str,0,0.0,0,None

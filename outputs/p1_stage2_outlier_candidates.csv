@@ -1,0 +1,151 @@
+Test_ID,Variable,Value,TriggeringMethods,ZScore,IQR_Bounds,Percentile_P1_P99,Applied_Voltage_kV,Load_Current_A,Ambient_Temperature_C,QualityIssueFlag,MissingAnyFlag,SensorS2NegativeFlag,SensorZeroFlag
+TRN-0747,Applied_Voltage_kV,8.1623,Percentile_Extreme_<P1_or_>P99,-1.68,"[-5.06, 45.79]","[8.19, 31.77]",8.1623,16.276,27.7498,False,False,False,False
+TRN-0294,Applied_Voltage_kV,31.8012,Percentile_Extreme_<P1_or_>P99,1.64,"[-5.06, 45.79]","[8.19, 31.77]",31.8012,33.9683,33.232,False,False,False,False
+TRN-0666,Applied_Voltage_kV,8.1382,Percentile_Extreme_<P1_or_>P99,-1.68,"[-5.06, 45.79]","[8.19, 31.77]",8.1382,65.7363,39.0356,False,False,False,False
+TRN-0662,Applied_Voltage_kV,8.1213,Percentile_Extreme_<P1_or_>P99,-1.69,"[-5.06, 45.79]","[8.19, 31.77]",8.1213,69.3968,29.281,False,False,False,False
+TRN-0234,Applied_Voltage_kV,31.8555,Percentile_Extreme_<P1_or_>P99,1.64,"[-5.06, 45.79]","[8.19, 31.77]",31.8555,89.9514,38.7023,False,False,False,False
+TRN-0838,Applied_Voltage_kV,31.932,Percentile_Extreme_<P1_or_>P99,1.66,"[-5.06, 45.79]","[8.19, 31.77]",31.932,79.8589,32.6147,False,False,False,False
+TRN-0133,Applied_Voltage_kV,8.076,Percentile_Extreme_<P1_or_>P99,-1.69,"[-5.06, 45.79]","[8.19, 31.77]",8.076,29.8006,45.4033,False,False,False,False
+TRN-0732,Applied_Voltage_kV,31.7669,Percentile_Extreme_<P1_or_>P99,1.63,"[-5.06, 45.79]","[8.19, 31.77]",31.7669,86.9219,26.3532,False,False,False,False
+TRN-0222,Applied_Voltage_kV,8.156,Percentile_Extreme_<P1_or_>P99,-1.68,"[-5.06, 45.79]","[8.19, 31.77]",8.156,109.6769,19.718,False,False,False,False
+TRN-0824,Applied_Voltage_kV,8.0753,Percentile_Extreme_<P1_or_>P99,-1.69,"[-5.06, 45.79]","[8.19, 31.77]",8.0753,73.0359,34.8506,False,False,False,False
+TRN-0725,Applied_Voltage_kV,8.1896,Percentile_Extreme_<P1_or_>P99,-1.68,"[-5.06, 45.79]","[8.19, 31.77]",8.1896,17.9727,30.2487,False,False,False,False
+TRN-0876,Applied_Voltage_kV,31.8671,Percentile_Extreme_<P1_or_>P99,1.65,"[-5.06, 45.79]","[8.19, 31.77]",31.8671,88.8569,30.5366,False,False,False,False
+TRN-0112,Applied_Voltage_kV,8.0142,Percentile_Extreme_<P1_or_>P99,-1.7,"[-5.06, 45.79]","[8.19, 31.77]",8.0142,60.8575,28.5069,False,False,False,False
+TRN-0127,Applied_Voltage_kV,31.9221,Percentile_Extreme_<P1_or_>P99,1.65,"[-5.06, 45.79]","[8.19, 31.77]",31.9221,26.6474,39.91,False,False,False,False
+TRN-0789,Applied_Voltage_kV,8.159,Percentile_Extreme_<P1_or_>P99,-1.68,"[-5.06, 45.79]","[8.19, 31.77]",8.159,75.9748,31.6705,False,False,False,False
+TRN-0663,Applied_Voltage_kV,31.9783,Percentile_Extreme_<P1_or_>P99,1.66,"[-5.06, 45.79]","[8.19, 31.77]",31.9783,109.3958,31.4348,False,False,False,False
+TRN-0632,Applied_Voltage_kV,31.9735,Percentile_Extreme_<P1_or_>P99,1.66,"[-5.06, 45.79]","[8.19, 31.77]",31.9735,69.2267,37.9105,False,False,False,False
+TRN-0122,Applied_Voltage_kV,31.8857,Percentile_Extreme_<P1_or_>P99,1.65,"[-5.06, 45.79]","[8.19, 31.77]",31.8857,49.6381,38.1437,False,False,False,False
+TRN-0685,Applied_Voltage_kV,31.8763,Percentile_Extreme_<P1_or_>P99,1.65,"[-5.06, 45.79]","[8.19, 31.77]",31.8763,87.9656,35.5841,False,False,False,False
+TRN-0701,Applied_Voltage_kV,8.0832,Percentile_Extreme_<P1_or_>P99,-1.69,"[-5.06, 45.79]","[8.19, 31.77]",8.0832,102.2184,27.279,False,False,False,False
+TRN-0351,Load_Current_A,109.9343,Percentile_Extreme_<P1_or_>P99,1.67,"[-33.18, 160.15]","[15.87, 109.48]",8.8242,109.9343,21.3625,False,False,False,False
+TRN-0097,Load_Current_A,15.5749,Percentile_Extreme_<P1_or_>P99,-1.71,"[-33.18, 160.15]","[15.87, 109.48]",24.0983,15.5749,32.5565,False,False,False,False
+TRN-0287,Load_Current_A,109.5992,Percentile_Extreme_<P1_or_>P99,1.66,"[-33.18, 160.15]","[15.87, 109.48]",24.9197,109.5992,39.1933,False,False,False,False
+TRN-0436,Load_Current_A,15.0079,Percentile_Extreme_<P1_or_>P99,-1.73,"[-33.18, 160.15]","[15.87, 109.48]",12.9292,15.0079,18.0,False,False,False,False
+TRN-0214,Load_Current_A,15.6042,Percentile_Extreme_<P1_or_>P99,-1.71,"[-33.18, 160.15]","[15.87, 109.48]",27.8415,15.6042,28.6918,False,False,False,False
+TRN-0762,Load_Current_A,109.9526,Percentile_Extreme_<P1_or_>P99,1.67,"[-33.18, 160.15]","[15.87, 109.48]",25.9956,109.9526,44.171,False,False,False,False
+TRN-0784,Load_Current_A,15.6296,Percentile_Extreme_<P1_or_>P99,-1.71,"[-33.18, 160.15]","[15.87, 109.48]",15.8702,15.6296,39.2104,False,False,False,False
+TRN-0222,Load_Current_A,109.6769,Percentile_Extreme_<P1_or_>P99,1.66,"[-33.18, 160.15]","[15.87, 109.48]",8.156,109.6769,19.718,False,False,False,False
+TRN-0343,Load_Current_A,15.0966,Percentile_Extreme_<P1_or_>P99,-1.73,"[-33.18, 160.15]","[15.87, 109.48]",26.2971,15.0966,35.2021,False,False,False,False
+TRN-0757,Load_Current_A,15.2952,Percentile_Extreme_<P1_or_>P99,-1.72,"[-33.18, 160.15]","[15.87, 109.48]",12.9334,15.2952,32.5392,False,False,False,False
+TRN-0260,Load_Current_A,109.8657,Percentile_Extreme_<P1_or_>P99,1.67,"[-33.18, 160.15]","[15.87, 109.48]",9.4712,109.8657,19.471,False,False,False,False
+TRN-0965,Load_Current_A,15.6778,Percentile_Extreme_<P1_or_>P99,-1.71,"[-33.18, 160.15]","[15.87, 109.48]",23.7163,15.6778,47.902,False,False,False,False
+TRN-0181,Load_Current_A,109.8992,Percentile_Extreme_<P1_or_>P99,1.67,"[-33.18, 160.15]","[15.87, 109.48]",18.6267,109.8992,25.7139,False,False,False,False
+TRN-0502,Load_Current_A,15.7485,Percentile_Extreme_<P1_or_>P99,-1.7,"[-33.18, 160.15]","[15.87, 109.48]",31.4814,15.7485,22.313,False,False,False,False
+TRN-0058,Load_Current_A,109.6014,Percentile_Extreme_<P1_or_>P99,1.66,"[-33.18, 160.15]","[15.87, 109.48]",31.3506,109.6014,35.8066,False,False,False,False
+TRN-0833,Load_Current_A,15.4321,Percentile_Extreme_<P1_or_>P99,-1.72,"[-33.18, 160.15]","[15.87, 109.48]",9.3932,15.4321,32.6449,False,False,False,False
+TRN-0044,Load_Current_A,109.6202,Percentile_Extreme_<P1_or_>P99,1.66,"[-33.18, 160.15]","[15.87, 109.48]",29.26,109.6202,29.7864,False,False,False,False
+TRN-0374,Load_Current_A,109.7203,Percentile_Extreme_<P1_or_>P99,1.67,"[-33.18, 160.15]","[15.87, 109.48]",23.1221,109.7203,46.3794,False,False,False,False
+TRN-0179,Load_Current_A,109.6532,Percentile_Extreme_<P1_or_>P99,1.66,"[-33.18, 160.15]","[15.87, 109.48]",13.3176,109.6532,40.8517,False,False,False,False
+TRN-0924,Load_Current_A,15.5071,Percentile_Extreme_<P1_or_>P99,-1.71,"[-33.18, 160.15]","[15.87, 109.48]",16.0857,15.5071,28.7113,False,False,False,False
+TRN-0542,Ambient_Temperature_C,52.0927,Percentile_Extreme_<P1_or_>P99,2.38,"[13.48, 54.44]","[18.0, 50.94]",29.8252,29.6371,52.0927,False,False,False,False
+TRN-0434,Ambient_Temperature_C,54.8353,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.75,"[13.48, 54.44]","[18.0, 50.94]",18.3304,91.2825,54.8353,True,True,False,False
+TRN-0946,Ambient_Temperature_C,55.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.77,"[13.48, 54.44]","[18.0, 50.94]",13.2616,50.6899,55.0,False,False,False,False
+TRN-0385,Ambient_Temperature_C,51.1547,Percentile_Extreme_<P1_or_>P99,2.26,"[13.48, 54.44]","[18.0, 50.94]",21.4684,24.2074,51.1547,False,False,False,False
+TRN-0908,Ambient_Temperature_C,53.6441,Percentile_Extreme_<P1_or_>P99,2.59,"[13.48, 54.44]","[18.0, 50.94]",27.8591,102.5299,53.6441,False,False,False,False
+TRN-0398,Ambient_Temperature_C,51.5397,Percentile_Extreme_<P1_or_>P99,2.31,"[13.48, 54.44]","[18.0, 50.94]",23.6081,38.436,51.5397,False,False,False,False
+TRN-0045,Ambient_Temperature_C,51.1121,Percentile_Extreme_<P1_or_>P99,2.25,"[13.48, 54.44]","[18.0, 50.94]",10.8096,60.4465,51.1121,False,False,False,False
+TRN-0223,Ambient_Temperature_C,52.6266,Percentile_Extreme_<P1_or_>P99,2.45,"[13.48, 54.44]","[18.0, 50.94]",28.7214,66.8864,52.6266,False,False,False,False
+TRN-0955,Ambient_Temperature_C,55.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.77,"[13.48, 54.44]","[18.0, 50.94]",26.4383,82.8779,55.0,False,False,False,False
+TRN-0953,Ambient_Temperature_C,55.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.77,"[13.48, 54.44]","[18.0, 50.94]",25.3769,64.1776,55.0,False,False,False,False
+TRN-0411,Test_Duration_min,5.2763,Percentile_Extreme_<P1_or_>P99,-1.69,"[-21.78, 85.61]","[5.41, 59.29]",19.2432,107.3619,29.4673,False,False,False,False
+TRN-0140,Test_Duration_min,59.8003,Percentile_Extreme_<P1_or_>P99,1.76,"[-21.78, 85.61]","[5.41, 59.29]",13.4841,75.9719,25.2769,True,True,False,False
+TRN-0507,Test_Duration_min,5.2737,Percentile_Extreme_<P1_or_>P99,-1.69,"[-21.78, 85.61]","[5.41, 59.29]",10.6681,75.8719,33.3623,False,False,False,False
+TRN-0051,Test_Duration_min,5.095,Percentile_Extreme_<P1_or_>P99,-1.7,"[-21.78, 85.61]","[5.41, 59.29]",31.1752,99.3175,25.9078,False,False,False,False
+TRN-0409,Test_Duration_min,59.6139,Percentile_Extreme_<P1_or_>P99,1.75,"[-21.78, 85.61]","[5.41, 59.29]",18.9372,42.7286,30.7494,False,False,False,False
+TRN-0702,Test_Duration_min,59.8097,Percentile_Extreme_<P1_or_>P99,1.76,"[-21.78, 85.61]","[5.41, 59.29]",19.4301,32.991,28.6255,False,False,False,False
+TRN-0674,Test_Duration_min,5.0434,Percentile_Extreme_<P1_or_>P99,-1.71,"[-21.78, 85.61]","[5.41, 59.29]",10.2641,67.6886,36.7714,False,False,False,False
+TRN-0671,Test_Duration_min,59.7622,Percentile_Extreme_<P1_or_>P99,1.76,"[-21.78, 85.61]","[5.41, 59.29]",22.0527,73.0502,31.3211,True,True,False,False
+TRN-0985,Test_Duration_min,59.5274,Percentile_Extreme_<P1_or_>P99,1.74,"[-21.78, 85.61]","[5.41, 59.29]",31.1523,68.3503,25.5586,False,False,False,False
+TRN-0573,Test_Duration_min,5.1753,Percentile_Extreme_<P1_or_>P99,-1.7,"[-21.78, 85.61]","[5.41, 59.29]",12.713,94.2479,33.3957,False,False,False,False
+TRN-0144,Test_Duration_min,5.2788,Percentile_Extreme_<P1_or_>P99,-1.69,"[-21.78, 85.61]","[5.41, 59.29]",21.5592,95.6797,38.3352,False,False,False,False
+TRN-0637,Test_Duration_min,5.1181,Percentile_Extreme_<P1_or_>P99,-1.7,"[-21.78, 85.61]","[5.41, 59.29]",28.1778,101.9614,46.7242,False,False,False,False
+TRN-0347,Test_Duration_min,59.4728,Percentile_Extreme_<P1_or_>P99,1.74,"[-21.78, 85.61]","[5.41, 59.29]",31.3892,61.6279,30.734,False,False,False,False
+TRN-0836,Test_Duration_min,59.9745,Percentile_Extreme_<P1_or_>P99,1.77,"[-21.78, 85.61]","[5.41, 59.29]",11.3923,89.2344,39.1595,False,False,False,False
+TRN-0029,Test_Duration_min,5.2606,Percentile_Extreme_<P1_or_>P99,-1.69,"[-21.78, 85.61]","[5.41, 59.29]",21.3349,46.1014,34.2588,False,False,False,False
+TRN-0233,Test_Duration_min,59.6472,Percentile_Extreme_<P1_or_>P99,1.75,"[-21.78, 85.61]","[5.41, 59.29]",15.3672,38.6916,36.452,False,False,False,False
+TRN-0264,Test_Duration_min,59.4113,Percentile_Extreme_<P1_or_>P99,1.74,"[-21.78, 85.61]","[5.41, 59.29]",8.8333,97.192,40.8705,False,False,False,False
+TRN-0089,Test_Duration_min,59.5524,Percentile_Extreme_<P1_or_>P99,1.74,"[-21.78, 85.61]","[5.41, 59.29]",31.414,88.8354,24.8395,False,False,False,False
+TRN-0852,Test_Duration_min,5.1608,Percentile_Extreme_<P1_or_>P99,-1.7,"[-21.78, 85.61]","[5.41, 59.29]",27.0525,96.1578,35.4219,True,True,False,False
+TRN-0900,Test_Duration_min,5.0829,Percentile_Extreme_<P1_or_>P99,-1.7,"[-21.78, 85.61]","[5.41, 59.29]",14.0411,33.1688,32.8892,False,False,False,False
+TRN-0135,Sensor_S1,4.7556,Percentile_Extreme_<P1_or_>P99,-2.14,"[1.41, 25.56]","[5.1, 21.83]",23.8796,37.0768,27.7869,False,False,False,False
+TRN-0747,Sensor_S1,4.8959,Percentile_Extreme_<P1_or_>P99,-2.11,"[1.41, 25.56]","[5.1, 21.83]",8.1623,16.276,27.7498,False,False,False,False
+TRN-0323,Sensor_S1,23.0025,Percentile_Extreme_<P1_or_>P99,2.33,"[1.41, 25.56]","[5.1, 21.83]",23.8319,94.5641,40.9548,False,False,False,False
+TRN-0557,Sensor_S1,0.1218,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.28),-3.28,"[1.41, 25.56]","[5.1, 21.83]",15.5447,29.2815,39.9119,False,False,False,False
+TRN-0406,Sensor_S1,22.7285,Percentile_Extreme_<P1_or_>P99,2.26,"[1.41, 25.56]","[5.1, 21.83]",25.1233,40.9434,43.4653,False,False,False,False
+TRN-0202,Sensor_S1,1.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.06),-3.06,"[1.41, 25.56]","[5.1, 21.83]",25.3237,106.6343,38.858,False,False,False,False
+TRN-0523,Sensor_S1,25.0,Percentile_Extreme_<P1_or_>P99,2.81,"[1.41, 25.56]","[5.1, 21.83]",11.8296,21.4584,32.3691,False,False,False,False
+TRN-0490,Sensor_S1,21.8695,Percentile_Extreme_<P1_or_>P99,2.05,"[1.41, 25.56]","[5.1, 21.83]",22.4352,87.399,34.984,False,False,False,False
+TRN-0385,Sensor_S1,4.2763,Percentile_Extreme_<P1_or_>P99,-2.26,"[1.41, 25.56]","[5.1, 21.83]",21.4684,24.2074,51.1547,False,False,False,False
+TRN-0750,Sensor_S1,24.0889,Percentile_Extreme_<P1_or_>P99,2.59,"[1.41, 25.56]","[5.1, 21.83]",29.7969,106.9523,26.6934,False,False,False,False
+TRN-0773,Sensor_S1,3.9127,Percentile_Extreme_<P1_or_>P99,-2.35,"[1.41, 25.56]","[5.1, 21.83]",18.149,40.6311,31.4089,False,False,False,False
+TRN-0254,Sensor_S1,2.2307,Percentile_Extreme_<P1_or_>P99,-2.76,"[1.41, 25.56]","[5.1, 21.83]",13.266,83.9721,38.084,False,False,False,False
+TRN-0121,Sensor_S1,1.7456,Percentile_Extreme_<P1_or_>P99,-2.88,"[1.41, 25.56]","[5.1, 21.83]",19.018,17.826,43.742,False,False,False,False
+TRN-0663,Sensor_S1,21.8455,Percentile_Extreme_<P1_or_>P99,2.04,"[1.41, 25.56]","[5.1, 21.83]",31.9783,109.3958,31.4348,False,False,False,False
+TRN-0692,Sensor_S1,24.9495,Percentile_Extreme_<P1_or_>P99,2.8,"[1.41, 25.56]","[5.1, 21.83]",21.0089,88.0631,36.4225,False,False,False,False
+TRN-0866,Sensor_S1,0.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.31),-3.31,"[1.41, 25.56]","[5.1, 21.83]",10.0427,38.7344,30.3281,False,False,False,True
+TRN-0349,Sensor_S1,23.7994,Percentile_Extreme_<P1_or_>P99,2.52,"[1.41, 25.56]","[5.1, 21.83]",26.5322,71.4206,39.4889,False,False,False,False
+TRN-0089,Sensor_S1,28.5205,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=3.68),3.68,"[1.41, 25.56]","[5.1, 21.83]",31.414,88.8354,24.8395,False,False,False,False
+TRN-0358,Sensor_S1,23.2412,Percentile_Extreme_<P1_or_>P99,2.38,"[1.41, 25.56]","[5.1, 21.83]",21.9169,69.2729,27.4127,False,False,False,False
+TRN-0077,Sensor_S1,1.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.06),-3.06,"[1.41, 25.56]","[5.1, 21.83]",28.6141,92.9727,24.1137,False,False,False,False
+TRN-0747,Sensor_S2,4.9854,Percentile_Extreme_<P1_or_>P99,-2.21,"[2.66, 24.55]","[5.11, 23.78]",8.1623,16.276,27.7498,False,False,False,False
+TRN-0124,Sensor_S2,25.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.89,"[2.66, 24.55]","[5.11, 23.78]",28.7059,44.4546,28.3929,False,False,False,False
+TRN-0167,Sensor_S2,0.0631,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.46),-3.46,"[2.66, 24.55]","[5.11, 23.78]",9.1955,28.8878,39.9113,False,False,False,False
+TRN-0652,Sensor_S2,0.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.48),-3.48,"[2.66, 24.55]","[5.11, 23.78]",27.089,62.907,40.7783,False,False,False,True
+TRN-0551,Sensor_S2,24.8572,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.85,"[2.66, 24.55]","[5.11, 23.78]",23.5579,70.8232,32.6027,False,False,False,False
+TRN-0203,Sensor_S2,-0.2015,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.53),-3.53,"[2.66, 24.55]","[5.11, 23.78]",12.9827,26.2827,18.5198,False,False,True,False
+TRN-0968,Sensor_S2,1.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.22),-3.22,"[2.66, 24.55]","[5.11, 23.78]",16.2319,44.2376,28.252,False,False,False,False
+TRN-0005,Sensor_S2,25.4034,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.99,"[2.66, 24.55]","[5.11, 23.78]",31.7051,81.847,21.9615,False,False,False,False
+TRN-0750,Sensor_S2,26.7829,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=3.34),3.34,"[2.66, 24.55]","[5.11, 23.78]",29.7969,106.9523,26.6934,False,False,False,False
+TRN-0291,Sensor_S2,24.0258,Percentile_Extreme_<P1_or_>P99,2.64,"[2.66, 24.55]","[5.11, 23.78]",30.2047,71.6651,36.8927,False,False,False,False
+TRN-0933,Sensor_S2,25.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.89,"[2.66, 24.55]","[5.11, 23.78]",17.3708,23.4709,18.735,False,False,False,False
+TRN-0463,Sensor_S2,25.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.89,"[2.66, 24.55]","[5.11, 23.78]",11.7153,40.6516,40.7035,False,False,False,False
+TRN-0305,Sensor_S2,1.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.22),-3.22,"[2.66, 24.55]","[5.11, 23.78]",18.9752,39.1127,26.3426,False,False,False,False
+TRN-0649,Sensor_S2,3.8193,Percentile_Extreme_<P1_or_>P99,-2.51,"[2.66, 24.55]","[5.11, 23.78]",29.9515,24.049,37.3554,False,False,False,False
+TRN-0529,Sensor_S2,25.595,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=3.04),3.04,"[2.66, 24.55]","[5.11, 23.78]",31.0312,81.3554,30.7886,False,False,False,False
+TRN-0432,Sensor_S2,2.667,Percentile_Extreme_<P1_or_>P99,-2.8,"[2.66, 24.55]","[5.11, 23.78]",10.4138,55.6913,32.6882,False,False,False,False
+TRN-0233,Sensor_S2,3.8644,Percentile_Extreme_<P1_or_>P99,-2.5,"[2.66, 24.55]","[5.11, 23.78]",15.3672,38.6916,36.452,False,False,False,False
+TRN-0301,Sensor_S2,28.0601,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=3.67),3.67,"[2.66, 24.55]","[5.11, 23.78]",31.3955,107.7199,28.1927,False,False,False,False
+TRN-0118,Sensor_S2,2.3372,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,-2.88,"[2.66, 24.55]","[5.11, 23.78]",17.225,17.998,31.2125,False,False,False,False
+TRN-0888,Sensor_S2,24.0598,Percentile_Extreme_<P1_or_>P99,2.65,"[2.66, 24.55]","[5.11, 23.78]",29.1316,87.2646,32.8035,False,False,False,False
+TRN-0087,Sensor_S3,3.2181,Percentile_Extreme_<P1_or_>P99,-2.67,"[0.09, 34.13]","[6.86, 26.34]",17.6142,31.0902,47.58,False,False,False,False
+TRN-0747,Sensor_S3,6.5243,Percentile_Extreme_<P1_or_>P99,-2.03,"[0.09, 34.13]","[6.86, 26.34]",8.1623,16.276,27.7498,False,False,False,False
+TRN-0097,Sensor_S3,5.4559,Percentile_Extreme_<P1_or_>P99,-2.23,"[0.09, 34.13]","[6.86, 26.34]",24.0983,15.5749,32.5565,False,False,False,False
+TRN-0704,Sensor_S3,30.0999,Percentile_Extreme_<P1_or_>P99,2.55,"[0.09, 34.13]","[6.86, 26.34]",24.0661,67.4291,32.3245,False,False,False,False
+TRN-0993,Sensor_S3,26.4027,Percentile_Extreme_<P1_or_>P99,1.83,"[0.09, 34.13]","[6.86, 26.34]",30.921,107.667,40.2538,False,False,False,False
+TRN-0321,Sensor_S3,1.0,Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.1),-3.1,"[0.09, 34.13]","[6.86, 26.34]",16.4319,106.2896,25.8871,False,False,False,False
+TRN-0646,Sensor_S3,29.9373,Percentile_Extreme_<P1_or_>P99,2.52,"[0.09, 34.13]","[6.86, 26.34]",25.9459,17.3392,44.559,False,False,False,False
+TRN-0755,Sensor_S3,1.0,Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.1),-3.1,"[0.09, 34.13]","[6.86, 26.34]",10.3894,48.2646,38.2092,False,False,False,False
+TRN-0682,Sensor_S3,0.0,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.29),-3.29,"[0.09, 34.13]","[6.86, 26.34]",22.2018,29.935,38.0634,False,False,False,True
+TRN-0857,Sensor_S3,29.8671,Percentile_Extreme_<P1_or_>P99,2.5,"[0.09, 34.13]","[6.86, 26.34]",25.8889,64.2977,19.4549,False,False,False,False
+TRN-0816,Sensor_S3,27.0815,Percentile_Extreme_<P1_or_>P99,1.96,"[0.09, 34.13]","[6.86, 26.34]",18.5243,67.6262,18.4807,False,False,False,False
+TRN-0508,Sensor_S3,1.0,Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.1),-3.1,"[0.09, 34.13]","[6.86, 26.34]",18.5872,24.0757,43.6181,False,False,False,False
+TRN-0468,Sensor_S3,6.04,Percentile_Extreme_<P1_or_>P99,-2.12,"[0.09, 34.13]","[6.86, 26.34]",11.3447,90.8143,31.9713,False,False,False,False
+TRN-0705,Sensor_S3,6.6989,Percentile_Extreme_<P1_or_>P99,-1.99,"[0.09, 34.13]","[6.86, 26.34]",8.2692,25.6949,31.0763,False,False,False,False
+TRN-0874,Sensor_S3,1.0,Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.1),-3.1,"[0.09, 34.13]","[6.86, 26.34]",21.7457,52.85,38.0608,False,False,False,False
+TRN-0059,Sensor_S3,35.7555,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=3.65),3.65,"[0.09, 34.13]","[6.86, 26.34]",30.7887,106.5889,44.7605,False,False,False,False
+TRN-0058,Sensor_S3,27.0793,Percentile_Extreme_<P1_or_>P99,1.96,"[0.09, 34.13]","[6.86, 26.34]",31.3506,109.6014,35.8066,False,False,False,False
+TRN-0663,Sensor_S3,27.2844,Percentile_Extreme_<P1_or_>P99,2.0,"[0.09, 34.13]","[6.86, 26.34]",31.9783,109.3958,31.4348,False,False,False,False
+TRN-0301,Sensor_S3,26.6706,Percentile_Extreme_<P1_or_>P99,1.88,"[0.09, 34.13]","[6.86, 26.34]",31.3955,107.7199,28.1927,False,False,False,False
+TRN-0552,Sensor_S3,26.6096,Percentile_Extreme_<P1_or_>P99,1.87,"[0.09, 34.13]","[6.86, 26.34]",31.7367,93.174,36.9449,False,False,False,False
+TRN-0591,Sensor_S4,83.903,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.72,"[17.96, 81.48]","[20.17, 79.05]",10.2728,88.373,37.5953,False,False,False,False
+TRN-0057,Sensor_S4,84.119,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.74,"[17.96, 81.48]","[20.17, 79.05]",30.1846,57.0555,30.0486,False,False,False,False
+TRN-0190,Sensor_S4,19.9086,Percentile_Extreme_<P1_or_>P99,-2.38,"[17.96, 81.48]","[20.17, 79.05]",15.2603,79.1605,29.4847,False,False,False,False
+TRN-0162,Sensor_S4,19.7703,Percentile_Extreme_<P1_or_>P99,-2.39,"[17.96, 81.48]","[20.17, 79.05]",13.1679,23.7918,20.5211,False,False,False,False
+TRN-0838,Sensor_S4,14.6559,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,-2.8,"[17.96, 81.48]","[20.17, 79.05]",31.932,79.8589,32.6147,False,False,False,False
+TRN-0893,Sensor_S4,87.7375,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=3.03),3.03,"[17.96, 81.48]","[20.17, 79.05]",14.6172,18.3131,44.6837,False,False,False,False
+TRN-0797,Sensor_S4,17.2785,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,-2.59,"[17.96, 81.48]","[20.17, 79.05]",20.8602,47.6941,30.521,True,True,False,False
+TRN-0488,Sensor_S4,83.8846,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.72,"[17.96, 81.48]","[20.17, 79.05]",9.8739,48.5443,43.9823,False,False,False,False
+TRN-0795,Sensor_S4,11.4004,IQR_Outlier; Percentile_Extreme_<P1_or_>P99; ZScore_Extreme(|z|=-3.06),-3.06,"[17.96, 81.48]","[20.17, 79.05]",19.6172,75.9294,47.4861,False,False,False,False
+TRN-0610,Sensor_S4,17.9856,Percentile_Extreme_<P1_or_>P99,-2.53,"[17.96, 81.48]","[20.17, 79.05]",17.4596,49.3322,31.8449,False,False,False,False
+TRN-0101,Sensor_S4,17.2228,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,-2.6,"[17.96, 81.48]","[20.17, 79.05]",27.1641,67.3367,30.467,False,False,False,False
+TRN-0982,Sensor_S4,80.5135,Percentile_Extreme_<P1_or_>P99,2.45,"[17.96, 81.48]","[20.17, 79.05]",12.4416,18.6756,38.7164,False,False,False,False
+TRN-0322,Sensor_S4,85.2779,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,2.83,"[17.96, 81.48]","[20.17, 79.05]",19.8459,44.1289,43.3522,False,False,False,False
+TRN-0772,Sensor_S4,15.8876,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,-2.7,"[17.96, 81.48]","[20.17, 79.05]",29.2843,55.6198,36.0893,False,False,False,False
+TRN-0809,Sensor_S4,80.3398,Percentile_Extreme_<P1_or_>P99,2.44,"[17.96, 81.48]","[20.17, 79.05]",27.2252,27.563,26.0366,False,False,False,False
+TRN-0987,Sensor_S4,80.3354,Percentile_Extreme_<P1_or_>P99,2.44,"[17.96, 81.48]","[20.17, 79.05]",8.9208,80.0837,21.4928,False,False,False,False
+TRN-0534,Sensor_S4,12.1712,IQR_Outlier; Percentile_Extreme_<P1_or_>P99,-3.0,"[17.96, 81.48]","[20.17, 79.05]",9.9767,102.2508,27.3341,False,False,False,False
+TRN-0256,Sensor_S4,18.6089,Percentile_Extreme_<P1_or_>P99,-2.49,"[17.96, 81.48]","[20.17, 79.05]",17.645,28.3906,40.9344,False,False,False,False
+TRN-0376,Sensor_S4,79.6941,Percentile_Extreme_<P1_or_>P99,2.39,"[17.96, 81.48]","[20.17, 79.05]",17.5322,81.2201,46.1176,False,False,False,False
+TRN-0054,Sensor_S4,80.5923,Percentile_Extreme_<P1_or_>P99,2.46,"[17.96, 81.48]","[20.17, 79.05]",30.4531,88.0644,32.0545,False,False,False,False
