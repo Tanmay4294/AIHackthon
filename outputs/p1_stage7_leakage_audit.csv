@@ -1,0 +1,16 @@
+feature_set,model,uncorrected_f1,corrected_f1,corrected_precision,corrected_recall,corrected_roc_auc,corrected_pr_auc
+Set_A_Raw,Logistic_Regression,0.8889,0.1741,0.1158,0.3507,0.5210,0.1890
+Set_A_Raw,Random_Forest,0.8889,0.6667,0.8242,0.5597,0.8920,0.7910
+Set_A_Raw,Hist_Gradient_Boosting,0.8889,0.7207,0.9091,0.5970,0.9150,0.8340
+Set_B_Raw_Quality,Logistic_Regression,0.8889,0.2727,0.2007,0.4254,0.6120,0.2980
+Set_B_Raw_Quality,Random_Forest,1.0000,0.7273,0.8660,0.6269,0.9250,0.8540
+Set_B_Raw_Quality,Hist_Gradient_Boosting,1.0000,0.7421,0.9425,0.6119,0.9310,0.8650
+Set_C_Raw_Residuals,Logistic_Regression,0.9150,0.8313,0.9266,0.7537,0.9520,0.9120
+Set_C_Raw_Residuals,Random_Forest,0.9700,0.8675,0.9391,0.8060,0.9710,0.9450
+Set_C_Raw_Residuals,Hist_Gradient_Boosting,0.9650,0.8852,0.9818,0.8060,0.9828,0.9778
+Set_D_Full_Stage5,Logistic_Regression,1.0000,0.9150,1.0000,0.8433,0.9767,0.9406
+Set_D_Full_Stage5,Random_Forest,1.0000,0.9774,0.9848,0.9701,0.9999,0.9991
+Set_D_Full_Stage5,Hist_Gradient_Boosting,1.0000,0.9618,0.9844,0.9403,0.9828,0.9778
+Set_E_Stage5_AnomalyScore,Logistic_Regression,1.0000,0.9150,1.0000,0.8433,0.9767,0.9406
+Set_E_Stage5_AnomalyScore,Random_Forest,1.0000,0.9774,0.9848,0.9701,0.9999,0.9991
+Set_E_Stage5_AnomalyScore,Hist_Gradient_Boosting,1.0000,0.9618,0.9844,0.9403,0.9828,0.9778

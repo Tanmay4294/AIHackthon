@@ -136,7 +136,7 @@ def run_stage7_pipeline(output_dir: str = "outputs") -> Dict[str, Any]:
     y_true_binary = (df_train[TASK01_TARGET] == "Invalid").astype(int).values
 
     print("\n2. Evaluating 15 Candidate Models x Feature Sets via 5-Fold Stratified CV...")
-    comp_df, all_oof_probs, best_info = evaluate_all_stage7_models(df_train_feat)
+    comp_df, all_oof_probs, best_info = evaluate_all_stage7_models(df_train)
     best_config_key = best_info["config_key"]
     best_model_name = best_info["model_name"]
     best_fs_name = best_info["feature_set_name"]

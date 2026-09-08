@@ -1,15 +1,16 @@
 """
-CPRI Hackathon — Person 1 Stage 7 ML Classification / Anomaly Models
-=====================================================================
-Provides leakage-free 5-fold Stratified Cross-Validation model evaluation,
+CPRI Hackathon — Person 1 Stage 7 ML Classification / Anomaly Models (STRICT FOLD-ISOLATED)
+========================================================================================
+Provides strict fold-isolated 5-fold Stratified Cross-Validation model evaluation,
 feature-set comparison, decision threshold optimization, permutation importance,
 and error analysis for Task 01.
 
 Guarantees:
+- STRICT FOLD ISOLATION: NormalBehaviourModels and Stage 5 feature transformers are fitted
+  STRICTLY on the training fold records during cross-validation.
 - Strict exclusion of Validity_Label, Reference_Parameter, and Test_ID from predictors.
-- Fold-isolated preprocessing and anomaly score generation.
 - 5-Fold Stratified CV (n_splits=5, shuffle=True, random_state=42).
-- Complete OOF probability predictions for all 1,000 training records.
+- Out-of-fold (OOF) probability predictions for all 1,000 training records.
 """
 
 from typing import Dict, List, Tuple, Any, Optional
@@ -34,96 +35,11 @@ from sklearn.metrics import (
 )
 
 from src.dataset_loader import TASK01_TARGET, ID_COLUMN, PHYSICAL_FEATURES
-from src.quality_features import FEATURE_COLUMNS
-from src.stage4_behaviour import NormalBehaviourModels
-
-
-def prepare_feature_sets(df_train_features: pd.DataFrame, df_test_features: Optional[pd.DataFrame] = None) -> Tuple[Dict[str, pd.DataFrame], Dict[str, Optional[pd.DataFrame]], Dict[str, List[str]]]:
-    """Constructs Feature Sets A, B, C, D, E for Training and Test data cleanly without target leakage."""
-
-    # Base raw features (Set A)
-    raw_cols = [c for c in PHYSICAL_FEATURES if c in df_train_features.columns]
-
-    # Quality flags (Set B)
-    quality_cols = [
-        "missing_any", "non_finite_value", "invalid_voltage", "invalid_current",
-        "invalid_duration", "invalid_ambient_temp", "sensor_s2_negative",
-        "sensor_zero_reading", "malformed_numeric", "data_quality_issue"
-    ]
-    avail_quality = [c for c in quality_cols if c in df_train_features.columns]
-
-    # Residual / consistency features (Set C)
-    residual_cols = [
-        "Sensor_S1_Residual", "Sensor_S2_Residual", "Sensor_S3_Residual", "Sensor_S4_Residual",
-        "p1_max_abs_residual", "p1_mean_abs_residual", "p1_consistency_index",
-        "p1_sensor_disagreement_index", "p1_regime_cluster"
-    ]
-    avail_residual = [c for c in residual_cols if c in df_train_features.columns]
-
-    # Full Stage 5 engineered features (Set D)
-    excluded = [ID_COLUMN, TASK01_TARGET, "Reference_Parameter", "missing_columns"]
-    full_stage5_cols = [c for c in df_train_features.columns if c not in excluded]
-
-    feature_sets_train = {}
-    feature_sets_test = {}
-    feature_names_dict = {}
-
-    # Set A: Raw physical inputs
-    feature_names_dict["Set_A_Raw"] = raw_cols
-    feature_sets_train["Set_A_Raw"] = df_train_features[raw_cols].apply(pd.to_numeric, errors='coerce')
-    feature_sets_test["Set_A_Raw"] = df_test_features[raw_cols].apply(pd.to_numeric, errors='coerce') if df_test_features is not None else None
-
-    # Set B: Raw + Quality
-    cols_b = list(set(raw_cols + avail_quality))
-    feature_names_dict["Set_B_Raw_Quality"] = cols_b
-    feature_sets_train["Set_B_Raw_Quality"] = df_train_features[cols_b].apply(pd.to_numeric, errors='coerce')
-    feature_sets_test["Set_B_Raw_Quality"] = df_test_features[cols_b].apply(pd.to_numeric, errors='coerce') if df_test_features is not None else None
-
-    # Set C: Raw + Stage 4 Residuals
-    cols_c = list(set(raw_cols + avail_residual))
-    feature_names_dict["Set_C_Raw_Residuals"] = cols_c
-    feature_sets_train["Set_C_Raw_Residuals"] = df_train_features[cols_c].apply(pd.to_numeric, errors='coerce')
-    feature_sets_test["Set_C_Raw_Residuals"] = df_test_features[cols_c].apply(pd.to_numeric, errors='coerce') if df_test_features is not None else None
-
-    # Set D: Full Stage 5 Features
-    feature_names_dict["Set_D_Full_Stage5"] = full_stage5_cols
-    feature_sets_train["Set_D_Full_Stage5"] = df_train_features[full_stage5_cols].apply(pd.to_numeric, errors='coerce')
-    feature_sets_test["Set_D_Full_Stage5"] = df_test_features[full_stage5_cols].apply(pd.to_numeric, errors='coerce') if df_test_features is not None else None
-
-    # Set E: Full Stage 5 + OOF Isolation Forest Anomaly Score
-    df_train_e = df_train_features[full_stage5_cols].apply(pd.to_numeric, errors='coerce').copy()
-    df_test_e = df_test_features[full_stage5_cols].apply(pd.to_numeric, errors='coerce').copy() if df_test_features is not None else None
-
-    # Compute fold-isolated OOF Isolation Forest score
-    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-    y_train_binary = (df_train_features[TASK01_TARGET] == "Invalid").astype(int).values if TASK01_TARGET in df_train_features.columns else np.zeros(len(df_train_features))
-
-    oof_anom_scores = np.zeros(len(df_train_features))
-    X_raw_mat = df_train_features[raw_cols].apply(pd.to_numeric, errors='coerce').fillna(0).values
-
-    for train_idx, val_idx in skf.split(X_raw_mat, y_train_binary):
-        iso = IsolationForest(n_estimators=200, contamination="auto", random_state=42)
-        iso.fit(X_raw_mat[train_idx])
-        oof_anom_scores[val_idx] = -iso.score_samples(X_raw_mat[val_idx])
-
-    df_train_e["isolation_forest_score"] = oof_anom_scores
-
-    if df_test_e is not None:
-        iso_full = IsolationForest(n_estimators=200, contamination="auto", random_state=42)
-        iso_full.fit(X_raw_mat)
-        X_test_raw_mat = df_test_features[raw_cols].apply(pd.to_numeric, errors='coerce').fillna(0).values
-        df_test_e["isolation_forest_score"] = -iso_full.score_samples(X_test_raw_mat)
-
-    cols_e = list(df_train_e.columns)
-    feature_names_dict["Set_E_Stage5_AnomalyScore"] = cols_e
-    feature_sets_train["Set_E_Stage5_AnomalyScore"] = df_train_e
-    feature_sets_test["Set_E_Stage5_AnomalyScore"] = df_test_e
-
-    return feature_sets_train, feature_sets_test, feature_names_dict
+from src.stage5_features import create_stage5_features, prepare_stage5_feature_matrix
 
 
 def get_model_pipelines() -> Dict[str, Any]:
-    """Returns the candidate machine learning pipelines."""
+    """Returns candidate machine learning pipelines."""
     pipelines = {
         "Logistic_Regression": Pipeline([
             ("imputer", SimpleImputer(strategy="median")),
@@ -142,46 +58,99 @@ def get_model_pipelines() -> Dict[str, Any]:
     return pipelines
 
 
-def evaluate_model_cv(model_name: str, pipeline: Pipeline, X: pd.DataFrame, y: np.ndarray, n_splits: int = 5, random_state: int = 42) -> Tuple[Dict[str, Any], np.ndarray]:
-    """Evaluates a single model x feature set configuration using 5-fold Stratified CV.
+def prepare_feature_sets(
+    df_train: pd.DataFrame,
+    df_test: Optional[pd.DataFrame] = None
+) -> Tuple[Dict[str, pd.DataFrame], Dict[str, pd.DataFrame], Dict[str, List[str]]]:
+    """Prepares feature set DataFrames for training and optional test datasets."""
+    raw_cols = [c for c in PHYSICAL_FEATURES if c in df_train.columns]
+    quality_cols = [
+        "missing_any", "non_finite_value", "invalid_voltage", "invalid_current",
+        "invalid_duration", "invalid_ambient_temp", "sensor_s2_negative",
+        "sensor_zero_reading", "malformed_numeric", "data_quality_issue"
+    ]
+    residual_cols = [
+        "Sensor_S1_Residual", "Sensor_S2_Residual", "Sensor_S3_Residual", "Sensor_S4_Residual",
+        "p1_max_abs_residual", "p1_mean_abs_residual", "p1_consistency_index",
+        "p1_sensor_disagreement_index", "p1_regime_cluster"
+    ]
 
-    Returns:
-        metrics_dict: Dictionary containing out-of-fold metrics.
-        oof_probs: Continuous OOF probability predictions for positive class (Invalid).
-    """
+    def _extract_sets(df: pd.DataFrame) -> Tuple[Dict[str, pd.DataFrame], Dict[str, List[str]]]:
+        df_copy = df.copy()
+        if "isolation_forest_score" not in df_copy.columns:
+            iso = IsolationForest(n_estimators=200, contamination="auto", random_state=42)
+            X_raw = df_copy[raw_cols].apply(pd.to_numeric, errors='coerce').fillna(0).values
+            iso.fit(X_raw)
+            df_copy["isolation_forest_score"] = -iso.score_samples(X_raw)
+
+        set_a = df_copy[raw_cols].apply(pd.to_numeric, errors='coerce')
+
+        b_cols = [c for c in raw_cols + quality_cols if c in df_copy.columns]
+        set_b = df_copy[b_cols].apply(pd.to_numeric, errors='coerce')
+
+        c_cols = [c for c in raw_cols + residual_cols if c in df_copy.columns]
+        set_c = df_copy[c_cols].apply(pd.to_numeric, errors='coerce')
+
+        set_d = prepare_stage5_feature_matrix(df_copy)
+
+        set_e = set_d.copy()
+        if "isolation_forest_score" not in set_e.columns and "isolation_forest_score" in df_copy.columns:
+            set_e["isolation_forest_score"] = pd.to_numeric(df_copy["isolation_forest_score"], errors='coerce')
+
+        sets = {
+            "Set_A_Raw": set_a,
+            "Set_B_Raw_Quality": set_b,
+            "Set_C_Raw_Residuals": set_c,
+            "Set_D_Full_Stage5": set_d,
+            "Set_E_Stage5_AnomalyScore": set_e
+        }
+        names = {k: list(v.columns) for k, v in sets.items()}
+        return sets, names
+
+    train_sets, names_dict = _extract_sets(df_train)
+    test_sets = {}
+    if df_test is not None:
+        test_sets, _ = _extract_sets(df_test)
+
+    return train_sets, test_sets, names_dict
+
+
+def evaluate_model_cv(
+    m_name: str,
+    pipeline: Pipeline,
+    X: pd.DataFrame,
+    y_true: np.ndarray,
+    n_splits: int = 5,
+    random_state: int = 42
+) -> Tuple[Dict[str, Any], np.ndarray]:
+    """Evaluates a single model on a pre-prepared feature matrix X using Stratified CV."""
     skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
-    oof_probs = np.zeros(len(y))
+    oof_probs = np.zeros(len(y_true))
+    X_vals = X.values if isinstance(X, pd.DataFrame) else X
 
-    X_mat = X.values
+    for train_idx, val_idx in skf.split(X_vals, y_true):
+        X_tr, y_tr = X_vals[train_idx], y_true[train_idx]
+        X_val = X_vals[val_idx]
 
-    for train_idx, val_idx in skf.split(X_mat, y):
-        X_train, y_train = X_mat[train_idx], y[train_idx]
-        X_val, y_val = X_mat[val_idx], y[val_idx]
+        pipeline.fit(X_tr, y_tr)
+        oof_probs[val_idx] = pipeline.predict_proba(X_val)[:, 1]
 
-        # Fit model pipeline strictly on training fold
-        pipeline.fit(X_train, y_train)
-
-        # Predict OOF probabilities
-        probs = pipeline.predict_proba(X_val)[:, 1]
-        oof_probs[val_idx] = probs
-
-    # Standard default decision threshold 0.50 for initial comparison
     y_pred_default = (oof_probs >= 0.50).astype(int)
-
-    cm = confusion_matrix(y, y_pred_default, labels=[0, 1])
+    cm = confusion_matrix(y_true, y_pred_default, labels=[0, 1])
     tn, fp, fn, tp = cm.ravel()
 
-    prec = round(float(precision_score(y, y_pred_default, zero_division=0)), 4)
-    rec = round(float(recall_score(y, y_pred_default, zero_division=0)), 4)
-    f1 = round(float(f1_score(y, y_pred_default, zero_division=0)), 4)
-    macro_f1 = round(float(f1_score(y, y_pred_default, average="macro", zero_division=0)), 4)
-    acc = round(float(accuracy_score(y, y_pred_default)), 4)
-    b_acc = round(float(balanced_accuracy_score(y, y_pred_default)), 4)
-    roc_auc = round(float(roc_auc_score(y, oof_probs)), 4)
-    pr_auc = round(float(average_precision_score(y, oof_probs)), 4)
+    prec = round(float(precision_score(y_true, y_pred_default, zero_division=0)), 4)
+    rec = round(float(recall_score(y_true, y_pred_default, zero_division=0)), 4)
+    f1 = round(float(f1_score(y_true, y_pred_default, zero_division=0)), 4)
+    macro_f1 = round(float(f1_score(y_true, y_pred_default, average="macro", zero_division=0)), 4)
+    acc = round(float(accuracy_score(y_true, y_pred_default)), 4)
+    b_acc = round(float(balanced_accuracy_score(y_true, y_pred_default)), 4)
+    roc_auc = round(float(roc_auc_score(y_true, oof_probs)), 4)
+    pr_auc = round(float(average_precision_score(y_true, oof_probs)), 4)
 
     metrics = {
-        "Model": model_name,
+        "Model": m_name,
+        "Feature_Set": X.name if hasattr(X, "name") else "Custom",
         "Invalid_Precision": prec,
         "Invalid_Recall": rec,
         "Invalid_F1": f1,
@@ -193,42 +162,139 @@ def evaluate_model_cv(model_name: str, pipeline: Pipeline, X: pd.DataFrame, y: n
         "TP": int(tp),
         "TN": int(tn),
         "FP": int(fp),
-        "FN": int(fn)
+        "FN": int(fn),
+        "Config_Key": f"{m_name}__Custom"
     }
 
     return metrics, oof_probs
 
 
-def evaluate_all_stage7_models(df_train_features: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, np.ndarray], Dict[str, Any]]:
-    """Evaluates all 15 candidate combinations (3 models x 5 feature sets) using 5-fold Stratified CV.
+def evaluate_stage7_configuration_fold_isolated(
+    m_name: str,
+    pipeline: Pipeline,
+    fs_name: str,
+    df_train: pd.DataFrame,
+    n_splits: int = 5,
+    random_state: int = 42
+) -> Tuple[Dict[str, Any], np.ndarray]:
+    """Evaluates a single model x feature set configuration using STRICT FOLD-ISOLATED 5-fold Stratified CV.
 
-    Returns:
-        comparison_df: Ranked DataFrame of all configurations by Invalid F1.
-        all_oof_probs: Dictionary mapping config_key to OOF probabilities.
-        best_config_info: Dictionary containing the best pipeline and details.
+    Fitting of NormalBehaviourModels and Stage 5 feature extraction occurs STRICTLY inside each training fold.
     """
-    if TASK01_TARGET not in df_train_features.columns:
-        raise ValueError("df_train_features must contain Validity_Label!")
+    y_true = (df_train[TASK01_TARGET] == "Invalid").astype(int).values
+    skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
 
-    y_true = (df_train_features[TASK01_TARGET] == "Invalid").astype(int).values
+    oof_probs = np.zeros(len(df_train))
 
-    feature_sets_train, _, feature_names_dict = prepare_feature_sets(df_train_features)
+    raw_cols = [c for c in PHYSICAL_FEATURES if c in df_train.columns]
+    quality_cols = [
+        "missing_any", "non_finite_value", "invalid_voltage", "invalid_current",
+        "invalid_duration", "invalid_ambient_temp", "sensor_s2_negative",
+        "sensor_zero_reading", "malformed_numeric", "data_quality_issue"
+    ]
+    residual_cols = [
+        "Sensor_S1_Residual", "Sensor_S2_Residual", "Sensor_S3_Residual", "Sensor_S4_Residual",
+        "p1_max_abs_residual", "p1_mean_abs_residual", "p1_consistency_index",
+        "p1_sensor_disagreement_index", "p1_regime_cluster"
+    ]
+
+    for train_idx, val_idx in skf.split(df_train, y_true):
+        df_tr_fold = df_train.iloc[train_idx].copy()
+        df_val_fold = df_train.iloc[val_idx].copy()
+
+        # Fit NormalBehaviourModels STRICTLY on df_tr_fold Valid records
+        df_tr_feat, fold_normal_models = create_stage5_features(df_tr_fold, fit_normal_models=True)
+
+        # Transform df_val_fold using fold_normal_models WITHOUT labels
+        df_val_feat, _ = create_stage5_features(df_val_fold, fit_normal_models=False, normal_models=fold_normal_models)
+
+        # Handle Anomaly Score for Set_E strictly inside fold
+        if fs_name == "Set_E_Stage5_AnomalyScore":
+            iso = IsolationForest(n_estimators=200, contamination="auto", random_state=42)
+            X_tr_raw = df_tr_feat[raw_cols].apply(pd.to_numeric, errors='coerce').fillna(0).values
+            X_val_raw = df_val_feat[raw_cols].apply(pd.to_numeric, errors='coerce').fillna(0).values
+            iso.fit(X_tr_raw)
+            df_tr_feat["isolation_forest_score"] = -iso.score_samples(X_tr_raw)
+            df_val_feat["isolation_forest_score"] = -iso.score_samples(X_val_raw)
+
+        # Select Feature Columns
+        if fs_name == "Set_A_Raw":
+            cols = raw_cols
+        elif fs_name == "Set_B_Raw_Quality":
+            cols = [c for c in df_tr_feat.columns if c in raw_cols + quality_cols]
+        elif fs_name == "Set_C_Raw_Residuals":
+            cols = [c for c in df_tr_feat.columns if c in raw_cols + residual_cols]
+        elif fs_name in ["Set_D_Full_Stage5", "Set_E_Stage5_AnomalyScore"]:
+            cols = list(prepare_stage5_feature_matrix(df_tr_feat).columns)
+
+        X_tr = df_tr_feat[cols].apply(pd.to_numeric, errors='coerce').values
+        X_val = df_val_feat[cols].apply(pd.to_numeric, errors='coerce').values
+        y_tr = y_true[train_idx]
+
+        # Fit pipeline ONLY on training fold matrix
+        pipeline.fit(X_tr, y_tr)
+
+        # Predict OOF probabilities for validation fold
+        probs = pipeline.predict_proba(X_val)[:, 1]
+        oof_probs[val_idx] = probs
+
+    # Default threshold 0.50 comparison
+    y_pred_default = (oof_probs >= 0.50).astype(int)
+    cm = confusion_matrix(y_true, y_pred_default, labels=[0, 1])
+    tn, fp, fn, tp = cm.ravel()
+
+    prec = round(float(precision_score(y_true, y_pred_default, zero_division=0)), 4)
+    rec = round(float(recall_score(y_true, y_pred_default, zero_division=0)), 4)
+    f1 = round(float(f1_score(y_true, y_pred_default, zero_division=0)), 4)
+    macro_f1 = round(float(f1_score(y_true, y_pred_default, average="macro", zero_division=0)), 4)
+    acc = round(float(accuracy_score(y_true, y_pred_default)), 4)
+    b_acc = round(float(balanced_accuracy_score(y_true, y_pred_default)), 4)
+    roc_auc = round(float(roc_auc_score(y_true, oof_probs)), 4)
+    pr_auc = round(float(average_precision_score(y_true, oof_probs)), 4)
+
+    metrics = {
+        "Model": m_name,
+        "Feature_Set": fs_name,
+        "Invalid_Precision": prec,
+        "Invalid_Recall": rec,
+        "Invalid_F1": f1,
+        "Macro_F1": macro_f1,
+        "Balanced_Accuracy": b_acc,
+        "Accuracy": acc,
+        "ROC_AUC": roc_auc,
+        "PR_AUC": pr_auc,
+        "TP": int(tp),
+        "TN": int(tn),
+        "FP": int(fp),
+        "FN": int(fn),
+        "Config_Key": f"{m_name}__{fs_name}"
+    }
+
+    return metrics, oof_probs
+
+
+def evaluate_all_stage7_models(df_train: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, np.ndarray], Dict[str, Any]]:
+    """Evaluates all 15 candidate configurations using STRICT FOLD-ISOLATED 5-fold Stratified CV."""
+    if TASK01_TARGET not in df_train.columns:
+        raise ValueError("df_train must contain Validity_Label!")
+
+    feature_set_names = [
+        "Set_A_Raw",
+        "Set_B_Raw_Quality",
+        "Set_C_Raw_Residuals",
+        "Set_D_Full_Stage5",
+        "Set_E_Stage5_AnomalyScore"
+    ]
     models_dict = get_model_pipelines()
 
     eval_records = []
     all_oof_probs = {}
 
-    for fs_name, X_fs in feature_sets_train.items():
+    for fs_name in feature_set_names:
         for m_name, pipeline in models_dict.items():
-            config_key = f"{m_name}__{fs_name}"
-
-            metrics, oof_probs = evaluate_model_cv(m_name, pipeline, X_fs, y_true, n_splits=5, random_state=42)
-            metrics["Feature_Set"] = fs_name
-            metrics["Num_Features"] = len(X_fs.columns)
-            metrics["Config_Key"] = config_key
-
+            metrics, oof_probs = evaluate_stage7_configuration_fold_isolated(m_name, pipeline, fs_name, df_train, n_splits=5, random_state=42)
             eval_records.append(metrics)
-            all_oof_probs[config_key] = oof_probs
+            all_oof_probs[metrics["Config_Key"]] = oof_probs
 
     comp_df = pd.DataFrame(eval_records).sort_values(by="Invalid_F1", ascending=False)
     best_row = comp_df.iloc[0]
@@ -279,7 +345,7 @@ def optimize_decision_threshold(y_true: np.ndarray, oof_probs: np.ndarray, thres
 
 
 def calculate_permutation_importance(pipeline: Pipeline, X: pd.DataFrame, y: np.ndarray, feature_names: List[str]) -> pd.DataFrame:
-    """Calculates permutation feature importance on out-of-fold / validation data."""
+    """Calculates permutation feature importance on validation data."""
     pipeline.fit(X.values, y)
     result = permutation_importance(pipeline, X.values, y, scoring="f1", n_repeats=10, random_state=42)
 
@@ -297,7 +363,6 @@ def analyze_ml_errors(df_train: pd.DataFrame, y_true: np.ndarray, y_pred: np.nda
     fp_mask = (y_true == 0) & (y_pred == 1)
     fn_mask = (y_true == 1) & (y_pred == 0)
 
-    # False Positives
     fp_records = []
     for idx, row in df_train[fp_mask].head(10).iterrows():
         c, v = row.get("Load_Current_A", np.nan), row.get("Applied_Voltage_kV", np.nan)
@@ -311,10 +376,9 @@ def analyze_ml_errors(df_train: pd.DataFrame, y_true: np.ndarray, y_pred: np.nda
             "Applied_Voltage_kV": v,
             "p1_max_abs_residual": row.get("p1_max_abs_residual", np.nan),
             "Validity_Label": "Valid",
-            "FP_Interpretation": f"Historically Valid test predicted Invalid by {config_name}. Likely severe current/voltage operating fluctuation."
+            "FP_Interpretation": f"Historically Valid test predicted Invalid by {config_name}. Operating fluctuation or border decision."
         })
 
-    # False Negatives
     fn_records = []
     for idx, row in df_train[fn_mask].head(10).iterrows():
         c, v = row.get("Load_Current_A", np.nan), row.get("Applied_Voltage_kV", np.nan)
@@ -326,7 +390,7 @@ def analyze_ml_errors(df_train: pd.DataFrame, y_true: np.ndarray, y_pred: np.nda
             "Applied_Voltage_kV": v,
             "p1_max_abs_residual": row.get("p1_max_abs_residual", np.nan),
             "Validity_Label": "Invalid",
-            "FN_Interpretation": f"Historically Invalid test predicted Valid by {config_name}. Requires deeper non-linear interaction features."
+            "FN_Interpretation": f"Historically Invalid test predicted Valid by {config_name}. Subtle sensor failure requiring lower threshold."
         })
 
     return pd.DataFrame(fp_records), pd.DataFrame(fn_records)

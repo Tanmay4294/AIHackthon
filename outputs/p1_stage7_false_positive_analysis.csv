@@ -1,1 +1,5 @@
-
+Config,Test_ID,Operating_Regime,Load_Current_A,Applied_Voltage_kV,p1_max_abs_residual,Validity_Label,FP_Interpretation
+Random_Forest__Set_D_Full_Stage5,TRN-0838,High Voltage,79.8589,31.932,33.33346429810561,Valid,Historically Valid test predicted Invalid by Random_Forest__Set_D_Full_Stage5. Operating fluctuation or border decision.
+Random_Forest__Set_D_Full_Stage5,TRN-0502,High Voltage,15.7485,31.4814,14.895313227634297,Valid,Historically Valid test predicted Invalid by Random_Forest__Set_D_Full_Stage5. Operating fluctuation or border decision.
+Random_Forest__Set_D_Full_Stage5,TRN-0705,Standard,25.6949,8.2692,11.801384983863251,Valid,Historically Valid test predicted Invalid by Random_Forest__Set_D_Full_Stage5. Operating fluctuation or border decision.
+Random_Forest__Set_D_Full_Stage5,TRN-0724,Heavy Current,103.2809,16.1649,15.209064127197749,Valid,Historically Valid test predicted Invalid by Random_Forest__Set_D_Full_Stage5. Operating fluctuation or border decision.
