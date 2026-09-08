@@ -2,9 +2,11 @@
 
 ## Summary of Deliverables
 - **Unified Feature Module**: `src/stage5_features.py`
+- **Feature Matrix Training**: `outputs/p1_stage5_feature_matrix_training.csv`
+- **Feature Matrix Test**: `outputs/p1_stage5_feature_matrix_test.csv`
 - **Feature Dictionary**: `outputs/p1_stage5_feature_dictionary.csv` (59 features documented)
 - **Feature Summary**: `outputs/p1_stage5_feature_matrix_summary.csv`
-- **S4 Investigation Report**: `outputs/p1_stage5_s4_investigation.csv`
+- **Feature List**: `outputs/p1_stage5_feature_list.md`
 
 ## How to Load Stage 5 Features
 ```python

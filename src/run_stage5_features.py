@@ -5,8 +5,8 @@ Executes the Stage 5 Feature Engineering pipeline:
 1. Loads Training_Data (1,000 rows) and Test_Data (350 rows).
 2. Generates complete Stage 5 feature matrices.
 3. Conducts Sensor_S4 comparative investigation.
-4. Generates feature dictionary and summary CSV files.
-5. Produces Markdown report and handoff documentation.
+4. Generates feature dictionary, evaluation, and summary CSV files.
+5. Produces Markdown reports, handoff documentation, and feature list.
 """
 
 import os
@@ -14,6 +14,7 @@ import sys
 from typing import Dict, Any
 import numpy as np
 import pandas as pd
+from scipy import stats
 
 # Ensure project root is in sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -43,11 +44,34 @@ def run_stage5_pipeline(output_dir: str = "outputs") -> Dict[str, Any]:
     print("\n3. Conducting Sensor S4 Comparative Investigation...")
     s4_comp_df = compare_s4_information(df_train)
 
-    print("\n4. Building Feature Dictionary & Summary...")
+    print("\n4. Building Feature Dictionary, Summary & Feature Evaluation...")
     feature_dict_df = build_feature_dictionary(df_train_features)
     
-    # Feature matrix summary
+    # Clean numeric feature matrices X
     X_train = prepare_stage5_feature_matrix(df_train_features)
+    X_test = prepare_stage5_feature_matrix(df_test_features)
+
+    # Feature evaluation vs Validity_Label (for historical training analysis)
+    eval_records = []
+    if TASK01_TARGET in df_train_features.columns:
+        y_binary = (df_train_features[TASK01_TARGET] == "Invalid").astype(int)
+        for col in X_train.columns:
+            s_val = X_train[col].dropna()
+            if len(s_val) > 10 and s_val.nunique() > 1:
+                r, p_val = stats.pearsonr(s_val, y_binary.loc[s_val.index])
+                val_mean = float(s_val[df_train_features[TASK01_TARGET] == "Valid"].mean())
+                inv_mean = float(s_val[df_train_features[TASK01_TARGET] == "Invalid"].mean())
+                eval_records.append({
+                    "feature_name": col,
+                    "valid_mean": round(val_mean, 4),
+                    "invalid_mean": round(inv_mean, 4),
+                    "pearson_r_invalid": round(float(r), 4),
+                    "p_value": round(float(p_val), 6),
+                    "separation_status": "Strong" if abs(r) > 0.3 else ("Moderate" if abs(r) > 0.1 else "Weak")
+                })
+    eval_df = pd.DataFrame(eval_records)
+
+    # Feature matrix summary
     summary_records = []
     for col in X_train.columns:
         s = X_train[col]
@@ -63,13 +87,55 @@ def run_stage5_pipeline(output_dir: str = "outputs") -> Dict[str, Any]:
         })
     summary_df = pd.DataFrame(summary_records)
 
-    print("\n5. Exporting CSV Files...")
+    print("\n5. Exporting CSV Files & Feature Matrices...")
     feature_dict_df.to_csv(os.path.join(output_dir, "p1_stage5_feature_dictionary.csv"), index=False)
     summary_df.to_csv(os.path.join(output_dir, "p1_stage5_feature_matrix_summary.csv"), index=False)
     s4_comp_df.to_csv(os.path.join(output_dir, "p1_stage5_s4_investigation.csv"), index=False)
+    eval_df.to_csv(os.path.join(output_dir, "p1_stage5_feature_evaluation.csv"), index=False)
 
-    print("\n6. Writing Markdown Reports...")
-    report_path = os.path.join(output_dir, "p1_stage5_feature_engineering_report.md")
+    # Export explicit feature matrix CSVs
+    X_train.to_csv(os.path.join(output_dir, "p1_stage5_feature_matrix_training.csv"), index=False)
+    X_test.to_csv(os.path.join(output_dir, "p1_stage5_feature_matrix_test.csv"), index=False)
+
+    print("\n6. Writing Markdown Reports & Gap Analysis...")
+    
+    # Gap analysis file
+    gap_analysis_md = f"""# Person 1 — Stage 5 & Stage 6 Gap Analysis
+
+## Executive Summary
+This document provides a gap analysis comparing Person 1 Stage 5 and Stage 6 requirements against the existing codebase (`AIHackthon`).
+Existing Person 1 Stages 1–4 and Person 2 Stages 1–4 provide dataset loaders, quality flags, baseline classifiers, unsupervised anomaly models, and physical residual/consistency features.
+
+---
+
+## Gap Analysis Table
+
+| Requirement | Already Implemented | Partially Implemented | Missing | Reusable Existing Module | Action Taken |
+| :--- | :---: | :---: | :---: | :--- | :--- |
+| **1. Sensor Differences** (`S1_minus_S2`, `S1_minus_S3`, etc.) | ❌ | ❌ | ⚠️ Missing | None | Implemented `create_sensor_difference_features()` in `src/stage5_features.py` |
+| **2. Sensor Aggregates** (mean, median, std across S1..S3 & S1..S4) | ❌ | 🟢 `Sensor_Mean` | ⚠️ Missing S1..S3 & median/std | `src/stage3_features.py` | Implemented `create_sensor_aggregate_features()` in `src/stage5_features.py` |
+| **3. Sensor Disagreement** (`max_minus_min`, pairwise abs diffs) | 🟢 `Sensor_Spread` | ❌ | ⚠️ Missing pairwise abs diffs | `src/quality_features.py` | Implemented `create_sensor_disagreement_features()` in `src/stage5_features.py` |
+| **4. Physical Residuals** (`p1_max_abs_residual`, `p1_consistency_index`) | 🟢 `NormalBehaviourModels` | ❌ | ❌ Complete | `src/stage4_behaviour.py` | Reused `NormalBehaviourModels.transform()` directly in `src/stage5_features.py` |
+| **5. Deterministic Quality Flags** (`missing_any`, `non_finite_value`, etc.) | 🟢 `create_quality_flags` | ❌ | ❌ Complete | `src/quality_features.py` | Reused `create_quality_flags()` directly in `src/stage5_features.py` |
+| **6. Physical Interactions** (`Thermal_Loading_Index`, `Apparent_Power_kVA`) | 🟢 `Apparent_Power_kVA` | ❌ | ⚠️ Missing thermal & impedance | `src/stage3_features.py` | Implemented `create_interaction_features()` in `src/stage5_features.py` |
+| **7. Sensor S4 Investigation** | ❌ | ❌ | ⚠️ Missing comparative evaluation | `src/stage4_behaviour.py` | Implemented `compare_s4_information()` in `src/stage5_features.py` |
+| **8. Baseline Anomaly Detectors** (Quality, IQR, Z-Score, IF, LOF, Residual) | 🟢 IF & LOF in P2 Stage 3 | ❌ | ⚠️ Missing Quality, IQR, Z-score, Residual baselines | `src/stage3_anomaly.py` | Implemented `src/stage6_baselines.py` and `src/run_stage6_baselines.py` |
+"""
+    with open(os.path.join(output_dir, "p1_stage5_stage6_gap_analysis.md"), "w", encoding="utf-8") as f:
+        f.write(gap_analysis_md)
+
+    # Feature list markdown
+    feat_list_md = f"""# Person 1 — Stage 5 Feature List
+
+Total Numeric Features: **{len(X_train.columns)} features**.
+
+{feature_dict_df.to_markdown(index=False)}
+"""
+    with open(os.path.join(output_dir, "p1_stage5_feature_list.md"), "w", encoding="utf-8") as f:
+        f.write(feat_list_md)
+
+    # Main Stage 5 Report
+    report_path = os.path.join(output_dir, "p1_stage5_report.md")
     report_md = f"""# Person 1 — Stage 5: Feature Engineering Report
 
 ## Executive Summary
@@ -105,14 +171,20 @@ Total Feature Count: **{len(X_train.columns)} numeric features**.
     with open(report_path, "w", encoding="utf-8") as f:
         f.write(report_md)
 
+    # Copy to p1_stage5_feature_engineering_report.md as well
+    with open(os.path.join(output_dir, "p1_stage5_feature_engineering_report.md"), "w", encoding="utf-8") as f:
+        f.write(report_md)
+
     handoff_path = os.path.join(output_dir, "p1_stage5_handoff.md")
     handoff_md = f"""# Person 1 Stage 5 Feature Handoff for Person 2
 
 ## Summary of Deliverables
 - **Unified Feature Module**: `src/stage5_features.py`
+- **Feature Matrix Training**: `outputs/p1_stage5_feature_matrix_training.csv`
+- **Feature Matrix Test**: `outputs/p1_stage5_feature_matrix_test.csv`
 - **Feature Dictionary**: `outputs/p1_stage5_feature_dictionary.csv` ({len(feature_dict_df)} features documented)
 - **Feature Summary**: `outputs/p1_stage5_feature_matrix_summary.csv`
-- **S4 Investigation Report**: `outputs/p1_stage5_s4_investigation.csv`
+- **Feature List**: `outputs/p1_stage5_feature_list.md`
 
 ## How to Load Stage 5 Features
 ```python

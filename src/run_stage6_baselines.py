@@ -12,7 +12,7 @@ Executes all baseline detectors for Person 1 Stage 6:
    - Residual / Consistency Threshold Baseline
 3. Generates 6 CSV output files under outputs/.
 4. Generates 6 diagnostic plots under outputs/figures/.
-5. Produces Markdown reports p1_stage6_baseline_report.md & p1_stage6_handoff.md.
+5. Produces Markdown reports p1_stage6_report.md & p1_stage6_handoff.md.
 """
 
 import os
@@ -178,6 +178,7 @@ def run_stage6_pipeline(output_dir: str = "outputs") -> Dict[str, Any]:
     all_fp_df.to_csv(os.path.join(output_dir, "p1_stage6_false_positive_analysis.csv"), index=False)
     all_fn_df.to_csv(os.path.join(output_dir, "p1_stage6_false_negative_analysis.csv"), index=False)
     reg_df.to_csv(os.path.join(output_dir, "p1_stage6_regime_performance.csv"), index=False)
+    reg_df.to_csv(os.path.join(output_dir, "p1_stage6_regime_analysis.csv"), index=False)
 
     # Threshold analysis table
     thresh_df = comp_df[["Method", "Threshold", "Num_Flagged", "Flag_Percentage(%)", "Invalid_Precision", "Invalid_Recall", "Invalid_F1"]].copy()
@@ -189,12 +190,14 @@ def run_stage6_pipeline(output_dir: str = "outputs") -> Dict[str, Any]:
     print("\n7. Writing Markdown Reports...")
     best_baseline = comp_df.iloc[0]
 
-    report_path = os.path.join(output_dir, "p1_stage6_baseline_report.md")
+    report_path = os.path.join(output_dir, "p1_stage6_report.md")
     report_md = f"""# Person 1 — Stage 6: Baseline Anomaly Detectors Report
 
 ## Executive Summary
 Stage 6 evaluates 6 baseline anomaly detectors prior to relying on complex supervised machine learning.
 The best performing baseline is **{best_baseline['Method']}** achieving an Invalid class F1-Score of **{best_baseline['Invalid_F1']}** (Precision: {best_baseline['Invalid_Precision']}, Recall: {best_baseline['Invalid_Recall']}).
+
+Recommended baseline = **`{best_baseline['Method']}`**
 
 ---
 
@@ -204,7 +207,7 @@ The best performing baseline is **{best_baseline['Method']}** achieving an Inval
 ---
 
 ## 2. Best Baseline Analysis
-- **Best Method**: `{best_baseline['Method']}`
+- **Recommended Baseline**: `{best_baseline['Method']}`
 - **Feature Basis**: `{best_baseline['Feature_Basis']}`
 - **Threshold**: `{best_baseline['Threshold']}`
 - **Why it Performed Best**: Deterministic quality rules and residual/consistency thresholds directly target hard sensor failures and extreme expected-value deviations without falsely flagging heavy operating regimes.
@@ -223,11 +226,14 @@ Global outlier detectors fail in high-load regimes. Residual-based detectors mai
     with open(report_path, "w", encoding="utf-8") as f:
         f.write(report_md)
 
+    with open(os.path.join(output_dir, "p1_stage6_baseline_report.md"), "w", encoding="utf-8") as f:
+        f.write(report_md)
+
     handoff_path = os.path.join(output_dir, "p1_stage6_handoff.md")
     handoff_md = f"""# Person 1 Stage 6 Baseline Handoff for Person 2
 
 ## Summary of Baseline Findings
-- **Best Baseline Detector**: `{best_baseline['Method']}` ($F1={best_baseline['Invalid_F1']}$, Precision={best_baseline['Invalid_Precision']}, Recall={best_baseline['Invalid_Recall']}$).
+- **Recommended Baseline**: `{best_baseline['Method']}` ($F1={best_baseline['Invalid_F1']}$, Precision={best_baseline['Invalid_Precision']}, Recall={best_baseline['Invalid_Recall']}$).
 - **Key Failure Mode of Simple Outlier Rules**: Raw IQR and Z-score methods generate excessive False Positives in Heavy Load regimes ($>85A$).
 - **Recommendation for Final Stage 4 Classifier**: Combine Stage 5 engineered features (`p1_max_abs_residual`, `p1_consistency_index`, data-quality flags) into a supervised tree ensemble (e.g. Random Forest / LightGBM) to achieve optimal non-linear separation.
 """
